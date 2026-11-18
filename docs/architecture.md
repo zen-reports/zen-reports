@@ -13,8 +13,7 @@ zen-reporter/
     ├── core/                  # @arpanp/zen-core                → see [core](packages/core.md)
     ├── cli/                   # @arpanp/zen-cli                 → see [cli](packages/cli.md)
     ├── ui/                    # @arpanp/zen-ui                  → see [ui](packages/ui.md)
-    ├── reporter-playwright/   # @arpanp/zen-reporter-playwright → see [reporter](packages/reporter-playwright.md)
-    └── server/                # @arpanp/zen-server              → see [server](packages/server.md)
+    └── reporter-playwright/   # @arpanp/zen-reporter-playwright → see [reporter](packages/reporter-playwright.md)
 ```
 
 ---
@@ -37,6 +36,10 @@ flowchart TD
     REP -. devDependency (build-time template) .-> UI
 ```
 
+### About zen-server
+
+[`zen-server`](packages/server.md) lives in its own repository at [GitHub](https://github.com/zen-reports/zen-server)
+
 ### Package Overview
 
 | Package                           | Role                                                                                                                           | Depends on                                                      | Built with                  |
@@ -45,7 +48,6 @@ flowchart TD
 | `@arpanp/zen-cli`                 | CLI commands (`zr`, `zen-reporter`), history querying & persistence (SQLite/DuckDB), report serving, and system diagnostics    | `zen-core`                                                      | `vite` + `tsc`              |
 | `@arpanp/zen-ui`                  | Interactive HTML report dashboard; single-file Vite/React bundle with all UI tabs                                              | `zen-core`                                                      | `vite`                      |
 | `@arpanp/zen-reporter-playwright` | Playwright reporter lifecycle, report bundle generation, and test execution data processing                                    | `zen-core`, `zen-cli` (runtime); `zen-ui` (build-time template) | `vite` + `tsc`              |
-| `@arpanp/zen-server`              | Multi-tenant Hono API for run ingestion, PostgreSQL persistence, and multi-cloud (S3/GCS/Azure) attachment storage             | `zen-core`                                                      | `tsc`                       |
 
 > **Note:** `zen-reporter-playwright` consumes the built UI bundle as a build-time asset:
 > `zen-ui` is declared as a devDependency, and `build:template`
