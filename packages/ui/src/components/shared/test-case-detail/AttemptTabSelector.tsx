@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { formatDurationVerbose } from '@arpanp/zen-core';
+import { formatDurationVerbose } from '@zen-reports/zen-core';
 import { type AttemptView, getAttemptDuration, statusConfig } from './AttemptView';
 
 export interface AttemptTabSelectorProps {

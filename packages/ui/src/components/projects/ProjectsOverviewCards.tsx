@@ -1,5 +1,5 @@
-import type { ProjectExecutiveKPIs } from '@arpanp/zen-core';
-import { formatDuration } from '@arpanp/zen-core';
+import type { ProjectExecutiveKPIs } from '@zen-reports/zen-core';
+import { formatDuration } from '@zen-reports/zen-core';
 import StatCard from '@/components/shared/StatCard';
 
 export interface ProjectsOverviewCardsProps {

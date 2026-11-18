@@ -1,24 +1,24 @@
-# Zen Reporter
+# Zen Reports
 
-[![npm version](https://img.shields.io/npm/v/@arpanp/zen-reporter-playwright.svg)](https://www.npmjs.com/package/@arpanp/zen-reporter-playwright)
-[![npm downloads](https://img.shields.io/npm/dm/@arpanp/zen-reporter-playwright.svg)](https://www.npmjs.com/package/@arpanp/zen-reporter-playwright)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Beautiful test execution reports for Playwright.
 
-[🚀 Live Demo](https://zen-reporter.vercel.app/demo) | [📚 Documentation](https://zen-reporter.vercel.app) | [📦 NPM Package](https://www.npmjs.com/package/@arpanp/zen-reporter-playwright)
+[🚀 Live Demo](https://docs.zenreports.dev/demo) | [📚 Documentation](https://docs.zenreports.dev) | [🐛 Report an Issue](https://github.com/zen-reports/zen-reports/issues)
 
-[📝 Release Notes](https://github.com/apatelia/zen-reporter/releases) | [🐛 Report an Issue](https://github.com/apatelia/zen-reporter/issues)
+> **Pre-Release Notice**: These packages are currently under active development and have **not been published to npm yet**. Direct installation and consumption in external projects is not possible at this time. Please do not attempt to install or consume `@zen-reports/*` packages prematurely until an official initial release is announced.
+>
+> **Continuation Notice**: This project is the official continuation and evolution of [`apatelia/zen-reporter`](https://github.com/apatelia/zen-reporter), now developed under the [`zen-reports`](https://github.com/zen-reports) organization as a modular multi-package monorepo centered around `@zen-reports/zen-reporter-playwright`.
 
 Zen Reporter transforms Playwright's raw test results into an interactive, visually stunning dashboard. It provides a clean, modern interface for exploring test suites, analyzing pass/fail rates, and diving into individual test failures with full step-by-step execution traces, source code snippets, syntax highlighting, and error stacks.
 
 Light mode:
 
-![Dashboard Overview - Light Mode](https://raw.githubusercontent.com/apatelia/zen-reporter/main/docs/screenshots/light-mode.png)
+![Dashboard Overview - Light Mode](https://raw.githubusercontent.com/zen-reports/zen-reports/main/docs/screenshots/light-mode.png)
 
 Dark mode:
 
-![Dashboard Overview - Dark Mode](https://raw.githubusercontent.com/apatelia/zen-reporter/main/docs/screenshots/dark-mode.png)
+![Dashboard Overview - Dark Mode](https://raw.githubusercontent.com/zen-reports/zen-reports/main/docs/screenshots/dark-mode.png)
 
 ## Features
 
@@ -34,7 +34,7 @@ Dark mode:
 - **Visual Quality Trends**: Track pass rate percentages over time, multi-project execution duration trends per project profile, and step category trends across historical runs.
 - **Dual History & Multi-Cloud Architecture**:
   - **Local Mode (SQLite & Disk)**: Single-developer and local CI environments store execution history in embedded SQLite (`history.db`) and artifacts on disk.
-  - **Remote SaaS Mode (Postgres & Multi-Cloud Object Storage)**: Ingestion server (`@arpanp/zen-server`) streaming test runs into PostgreSQL with direct binary uploads via presigned URLs to **AWS S3** (or MinIO/R2), **Google Cloud Storage (GCS)**, and **Microsoft Azure Blob Storage**.
+  - **Remote SaaS Mode (Postgres & Multi-Cloud Object Storage)**: Optional ingestion server ([`@zen-reports/zen-server`](https://github.com/zen-reports/zen-server), maintained in a separate repository under the [FSL-1.1-MIT](https://github.com/zen-reports/zen-server/blob/main/LICENSE) license) streaming test runs into PostgreSQL with direct binary uploads via presigned URLs to **AWS S3** (or MinIO/R2), **Google Cloud Storage (GCS)**, and **Microsoft Azure Blob Storage**.
 - **DuckDB-Powered Test Intelligence**: Embedded analytics engine for advanced test suite intelligence:
   - **Flaky Intelligence**: Detect tests fluctuating between pass and fail across historical runs.
   - **Regression Tracking**: Identify tests that previously passed but regressed to failed in the latest run.
@@ -66,14 +66,14 @@ Odd-numbered interim versions (e.g., 23.x, 25.x) are unsupported.
 ## Installation
 
 ```bash
-npm install -D @arpanp/zen-reporter-playwright @arpanp/zen-cli
+npm install -D @zen-reports/zen-reporter-playwright @zen-reports/zen-cli
 ```
 
 ---
 
 ## Configuring Zen Reporter in Playwright
 
-Add `@arpanp/zen-reporter-playwright` to your `playwright.config.ts` (or `playwright.config.js`):
+Add `@zen-reports/zen-reporter-playwright` to your `playwright.config.ts` (or `playwright.config.js`):
 
 ### Basic Configuration
 
@@ -81,7 +81,7 @@ Add `@arpanp/zen-reporter-playwright` to your `playwright.config.ts` (or `playwr
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  reporter: '@arpanp/zen-reporter-playwright',
+  reporter: '@zen-reports/zen-reporter-playwright',
 });
 ```
 
@@ -95,7 +95,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   reporter: [
     [
-      '@arpanp/zen-reporter-playwright',
+      '@zen-reports/zen-reporter-playwright',
       {
         outputDir: 'zen-report', // Output directory for reports and SQLite history
         projectName: 'My E2E Project', // Project name displayed in top navigation bar

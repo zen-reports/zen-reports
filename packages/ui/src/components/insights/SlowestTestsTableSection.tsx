@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import type { HistorySlowRow } from '@arpanp/zen-core';
-import { formatDateLocal, formatDurationVerbose } from '@arpanp/zen-core';
+import type { HistorySlowRow } from '@zen-reports/zen-core';
+import { formatDateLocal, formatDurationVerbose } from '@zen-reports/zen-core';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import { StatusPill } from '@/components/shared/StatusPill';
 import { DataTable } from '@/components/shared/DataTable';
 import type { ColumnDef } from '@/components/shared/DataTable';
-import { generateExportFilename } from '@arpanp/zen-core';
+import { generateExportFilename } from '@zen-reports/zen-core';
 
 export interface SlowestTestsTableSectionProps {
   slowest: HistorySlowRow[];

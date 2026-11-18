@@ -4,7 +4,7 @@ import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, type Plugin } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
-import type { TestCase, TestSuite } from '@arpanp/zen-core';
+import type { TestCase, TestSuite } from '@zen-reports/zen-core';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,7 +23,7 @@ const serveReportAssets: Plugin = {
       if (!req.url || req.method !== 'GET') return next();
 
       try {
-        const { SqliteHistoryStore } = await import('@arpanp/zen-cli');
+        const { SqliteHistoryStore } = await import('@zen-reports/zen-cli');
         const dbPath = resolve(REPORT_DIR, 'history.db');
         if (!existsSync(dbPath)) {
           res.statusCode = 404;
@@ -70,7 +70,7 @@ const serveReportAssets: Plugin = {
       if (!req.url || req.method !== 'GET') return next();
 
       try {
-        const { SqliteHistoryStore } = await import('@arpanp/zen-cli');
+        const { SqliteHistoryStore } = await import('@zen-reports/zen-cli');
         const dbPath = resolve(REPORT_DIR, 'history.db');
         if (!existsSync(dbPath)) {
           res.statusCode = 404;
@@ -175,7 +175,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      '@arpanp/zen-reporter-playwright': resolve(
+      '@zen-reports/zen-reporter-playwright': resolve(
         __dirname,
         '../reporter-playwright/src/lib/reporter.ts'
       ),

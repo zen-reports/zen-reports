@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   TooltipContentProps,
 } from 'recharts';
-import type { ProjectStats } from '@arpanp/zen-core';
+import type { ProjectStats } from '@zen-reports/zen-core';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 
 export interface ProjectVolumeCoverageChartProps {

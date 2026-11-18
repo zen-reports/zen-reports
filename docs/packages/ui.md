@@ -1,6 +1,6 @@
-# `@arpanp/zen-ui` — Interactive Report Dashboard
+# `@zen-reports/zen-ui` — Interactive Report Dashboard
 
-> Package: `packages/ui` · Deps: `@arpanp/zen-core` · Build: Vite (single-file HTML bundle)
+> Package: `packages/ui` · Deps: `@zen-reports/zen-core` · Build: Vite (single-file HTML bundle)
 
 The React dashboard that renders Zen Reporter's interactive HTML report. It
 ships as a **self-contained single-file `dist/index.html`** bundle: all
@@ -29,8 +29,8 @@ packages/ui/
 ```
 
 ```bash
-npm run dev   -w @arpanp/zen-ui   # Vite dev server
-npm run build -w @arpanp/zen-ui   # cross-env ZEN_REPORTER_DATA_FREE=true vite build
+npm run dev   -w @zen-reports/zen-ui   # Vite dev server
+npm run build -w @zen-reports/zen-ui   # cross-env ZEN_REPORTER_DATA_FREE=true vite build
 ```
 
 The `ZEN_REPORTER_DATA_FREE=true` build flag produces a data-free template
@@ -132,10 +132,10 @@ src/components/
 
 - **Local (offline) mode:** `report.json` + `history.json` datasets inlined by
   the reporter into the single HTML file. All analytics are computed client-side
-  using `@arpanp/zen-core` utilities.
+  using `@zen-reports/zen-core` utilities.
 - **Remote (server) mode:** heavy per-test details (steps, stdout/stderr,
   stack traces, attachment URLs) are lazy-loaded from
-  [`@arpanp/zen-server`](server.md) (`GET /api/v1/runs/:runId/tests/:testId`).
+  [`@zen-reports/zen-server`](https://github.com/zen-reports/zen-server) (`GET /api/v1/runs/:runId/tests/:testId`), an optional standalone service with an FSL-1.1-MIT license.
 
 Shared styling, status colors, and KPI math all come from
-[`@arpanp/zen-core`](core.md) (`theme.ts`, `statsUtils.ts`, etc.).
+[`@zen-reports/zen-core`](core.md) (`theme.ts`, `statsUtils.ts`, etc.).

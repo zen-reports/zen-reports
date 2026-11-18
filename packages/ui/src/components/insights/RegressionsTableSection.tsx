@@ -7,8 +7,8 @@ import DateFilterControl from '@/components/shared/DateFilterControl';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import SearchInput from '@/components/shared/SearchInput';
 import { StatusPill } from '@/components/shared/StatusPill';
-import type { HistoryRegressionRow } from '@arpanp/zen-core';
-import { formatDateLocal, generateExportFilename } from '@arpanp/zen-core';
+import type { HistoryRegressionRow } from '@zen-reports/zen-core';
+import { formatDateLocal, generateExportFilename } from '@zen-reports/zen-core';
 import { useMemo, useState } from 'react';
 
 export interface RegressionsTableSectionProps {

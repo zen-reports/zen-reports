@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { extractNotificationsFromReport } from '@arpanp/zen-core';
-import type { ReportData } from '@arpanp/zen-core';
+import { extractNotificationsFromReport } from '@zen-reports/zen-core';
+import type { ReportData } from '@zen-reports/zen-core';
 
 test.describe('Notification Center Unit Tests', () => {
   const dummySummary = {

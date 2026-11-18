@@ -20,7 +20,7 @@ import {
   TESTS_SUMMARY_SQL,
   TREND_SQL,
 } from './common.js';
-import { generateExportFilename } from '@arpanp/zen-core';
+import { generateExportFilename } from '@zen-reports/zen-core';
 import { printHelp } from './help.js';
 
 /**

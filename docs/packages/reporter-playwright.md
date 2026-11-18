@@ -1,9 +1,9 @@
-# `@arpanp/zen-reporter-playwright` — Playwright Reporter Adapter
+# `@zen-reports/zen-reporter-playwright` — Playwright Reporter Adapter
 
-> Package: `packages/reporter-playwright` · Runtime deps: `@arpanp/zen-core`, `@arpanp/zen-cli` · Dev dep: `@arpanp/zen-ui` (build-time template only) · Entry: `dist/reporter.cjs`
+> Package: `packages/reporter-playwright` · Runtime deps: `@zen-reports/zen-core`, `@zen-reports/zen-cli` · Dev dep: `@zen-reports/zen-ui` (build-time template only) · Entry: `dist/reporter.cjs`
 
 The official Playwright reporter adapter for Zen Reporter. It plugs into Playwright as a custom reporter,
-processes test execution data, persists run history via `@arpanp/zen-cli`, and generates the
+processes test execution data, persists run history via `@zen-reports/zen-cli`, and generates the
 self-contained HTML report bundle.
 
 ---
@@ -61,16 +61,17 @@ Playwright Test Execution
 ### Remote (SaaS) Mode
 
 `RemoteHistoryStore` replaces the local SQLite store: it requests presigned
-upload URLs from `@arpanp/zen-server`, PUTs attachment binaries directly to
-S3/GCS/Azure object storage, and streams lightweight run metadata to the
-PostgreSQL-backed ingestion API. See [server.md](server.md).
+upload URLs from `@zen-reports/zen-server` (an optional service maintained in a
+separate repository under the restrictive FSL-1.1-MIT license), PUTs attachment
+binaries directly to S3/GCS/Azure object storage, and streams lightweight run
+metadata to the PostgreSQL-backed ingestion API. See the [zen-server documentation](https://github.com/zen-reports/zen-server#readme).
 
 ---
 
 ## Build Pipeline
 
 ```bash
-npm run build -w @arpanp/zen-reporter-playwright
+npm run build -w @zen-reports/zen-reporter-playwright
 ```
 
 1. **`build:template`** — copies the data-free UI bundle
@@ -78,11 +79,7 @@ npm run build -w @arpanp/zen-reporter-playwright
 2. **`build:reporter`** — Vite-bundles the reporter entry (`dist/reporter.js`/`.cjs`)
    and emits type declarations via `tsc -p tsconfig.lib.json`.
 
-Build order from the monorepo root: `core → reporter (bundle) → ui →
-reporter (template) → server` (`npm run build`). The reporter is bundled
-before the UI because the UI's `vite.config.ts` imports `@arpanp/zen-reporter-playwright`,
-which resolves through the reporter's `dist/`; the template copy then runs
-after the UI build.
+Build order from the monorepo root: `core → cli → ui → reporter:playwright` (`npm run build`).
 
 ---
 

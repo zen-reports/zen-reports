@@ -1,4 +1,4 @@
-import type { TestSuite } from '@arpanp/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
 import FileSummary from '@/components/files/FileSummary';
 import FileMetricsSection from '@/components/files/FileMetricsSection';
 

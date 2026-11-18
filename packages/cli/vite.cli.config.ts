@@ -25,7 +25,7 @@ export default defineConfig({
         'util',
         'http',
         '@duckdb/node-api',
-        '@arpanp/zen-core',
+        '@zen-reports/zen-core',
       ],
       output: {
         exports: 'named',

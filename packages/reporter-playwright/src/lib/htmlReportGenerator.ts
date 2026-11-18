@@ -4,7 +4,7 @@ import { createRequire } from 'module';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { detectPackageManager } from './dataProcessor';
-import type { ReportData, ResultSummary, TestSuite } from '@arpanp/zen-core';
+import type { ReportData, ResultSummary, TestSuite } from '@zen-reports/zen-core';
 
 /**
  * Configuration options needed for HTML report generation.
@@ -18,7 +18,7 @@ export interface HtmlReportOptions {
 }
 
 /**
- * Finds the absolute path to `bin/zen-reporter.js` by checking @arpanp/zen-cli and parent directories.
+ * Finds the absolute path to `bin/zen-reporter.js` by checking @zen-reports/zen-cli and parent directories.
  *
  * @returns Absolute path to `bin/zen-reporter.js`, or `null` if not found.
  */
@@ -26,10 +26,10 @@ export function findBinPath(): string | null {
   const moduleFile =
     typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
 
-  // 1. Resolve through @arpanp/zen-cli package resolution
+  // 1. Resolve through @zen-reports/zen-cli package resolution
   try {
     const req = createRequire(moduleFile);
-    const cliPkgJson = req.resolve('@arpanp/zen-cli/package.json');
+    const cliPkgJson = req.resolve('@zen-reports/zen-cli/package.json');
     const binPath = path.join(path.dirname(cliPkgJson), 'bin', 'zen-reporter.js');
     if (fs.existsSync(binPath)) {
       return binPath;

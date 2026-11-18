@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { buildRunId } from '../runHistory.js';
 import { getGitBranch, getGitCommit } from '../gitUtils.js';
-import { buildSuitesFromCases } from '@arpanp/zen-core';
+import { buildSuitesFromCases } from '@zen-reports/zen-core';
 import type { HistoryStore } from './HistoryStore.js';
 import type { WriteRunHistoryOptions } from '../runHistoryWriter.js';
 import type {
@@ -13,7 +13,7 @@ import type {
   RemoteHistoryConfig,
   TestCase,
   TestStep,
-} from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
 
 interface RemoteRunDto {
   id: string;
@@ -102,7 +102,7 @@ export interface RemoteHistoryStoreOptions extends RemoteHistoryConfig {
 
 /**
  * Remote HTTP implementation of `HistoryStore`.
- * Targets a centralized Zen Reporter ingestion service (`packages/server` or SaaS endpoint).
+ * Targets a centralized Zen Reporter ingestion service (`@zen-reports/zen-server` or SaaS endpoint).
  * Streams test run metadata, lightweight test cases, and uploads binary attachments via presigned S3 URLs.
  */
 export class RemoteHistoryStore implements HistoryStore {

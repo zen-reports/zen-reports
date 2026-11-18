@@ -1,4 +1,4 @@
-import { STATUS_BADGE_STYLE_MAP, type StatusType } from '@arpanp/zen-core';
+import { STATUS_BADGE_STYLE_MAP, type StatusType } from '@zen-reports/zen-core';
 
 export interface StatusCountBadgeProps {
   count: number;

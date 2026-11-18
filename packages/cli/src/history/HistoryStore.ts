@@ -1,4 +1,4 @@
-import type { HistoryData } from '@arpanp/zen-core';
+import type { HistoryData } from '@zen-reports/zen-core';
 import type { WriteRunHistoryOptions } from '../runHistoryWriter.js';
 
 /**
@@ -34,7 +34,7 @@ export interface HistoryStore {
    * @param runId - Unique identifier of the test run.
    * @returns Reconstructed ReportData object or null if not found.
    */
-  getRunReport(runId: string): Promise<import('@arpanp/zen-core').ReportData | null>;
+  getRunReport(runId: string): Promise<import('@zen-reports/zen-core').ReportData | null>;
 
   /**
    * Closes database connections, flushes buffered writes, or releases file locks.

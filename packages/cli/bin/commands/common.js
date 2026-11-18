@@ -2,7 +2,7 @@ import { existsSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'fs'
 import { dirname, relative, resolve } from 'path';
 import * as clack from '@clack/prompts';
 import pc from 'picocolors';
-import { exportToCsvString, generateExportFilename } from '@arpanp/zen-core';
+import { exportToCsvString, generateExportFilename } from '@zen-reports/zen-core';
 
 export { getOsName, getPlaywrightVersion, getZenReporterVersion } from '../../dist/index.js';
 

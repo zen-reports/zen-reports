@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import type { FailedTest } from '@arpanp/zen-core';
-import { getErrorSignature } from '@arpanp/zen-core';
+import type { FailedTest } from '@zen-reports/zen-core';
+import { getErrorSignature } from '@zen-reports/zen-core';
 import TestCaseCard from '@/components/shared/TestCaseCard';
 
 export interface FailureListProps {

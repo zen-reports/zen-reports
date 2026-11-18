@@ -9,7 +9,7 @@ test.fail(
     console.log('This test should fail');
 
     // Go to Zen Reporter's home page
-    await page.goto('https://zen-reporter.vercel.app');
+    await page.goto('https://docs.zenreports.dev');
 
     // Wait for "Getting Started" link-button to be visible
     await page
@@ -54,7 +54,7 @@ test.fail(
     test.skip(browserName === 'chromium', 'skipping test intentionally in chromium');
 
     // Go to Zen Reporter's home page
-    await page.goto('https://zen-reporter.vercel.app');
+    await page.goto('https://docs.zenreports.dev');
 
     // Wait for "Getting Started" link-button to be visible
     await page

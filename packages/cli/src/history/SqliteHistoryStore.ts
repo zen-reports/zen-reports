@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { buildRunId } from '../runHistory.js';
-import { buildSuitesFromCases, computePassRate } from '@arpanp/zen-core';
+import { buildSuitesFromCases, computePassRate } from '@zen-reports/zen-core';
 import type { WriteRunHistoryOptions } from '../runHistoryWriter.js';
 import type {
   Attachment,
@@ -15,8 +15,8 @@ import type {
   ReportData,
   ResultSummary,
   TestRun,
-} from '@arpanp/zen-core';
-import type { TestCase as TestCaseModel } from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
+import type { TestCase as TestCaseModel } from '@zen-reports/zen-core';
 import type { HistoryStore } from './HistoryStore';
 import { CREATE_HISTORY_VIEW_SQL, CREATE_INDEXES_SQL, CREATE_TABLES_SQL } from './schema';
 

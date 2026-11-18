@@ -9,10 +9,10 @@ import {
   ResponsiveContainer,
   TooltipContentProps,
 } from 'recharts';
-import { computeProjectStats, collectAllCases } from '@arpanp/zen-core';
-import type { ResultSummary, TestSuite } from '@arpanp/zen-core';
+import { computeProjectStats, collectAllCases } from '@zen-reports/zen-core';
+import type { ResultSummary, TestSuite } from '@zen-reports/zen-core';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
-import { TEST_STATUS_COLOR_MAP } from '@arpanp/zen-core';
+import { TEST_STATUS_COLOR_MAP } from '@zen-reports/zen-core';
 
 const colorMap = TEST_STATUS_COLOR_MAP;
 

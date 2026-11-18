@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import BaseModal from '../BaseModal';
-import type { Attachment } from '@arpanp/zen-core';
+import type { Attachment } from '@zen-reports/zen-core';
 import type { AttemptView } from './AttemptView';
-import { detectLanguage, highlightSyntaxLine } from '@arpanp/zen-core';
+import { detectLanguage, highlightSyntaxLine } from '@zen-reports/zen-core';
 
 export interface UniversalPreviewItem {
   id: string;

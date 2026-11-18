@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { TestCase } from '@arpanp/zen-core';
-import { formatDurationVerbose, computeLatencyPercentiles } from '@arpanp/zen-core';
+import type { TestCase } from '@zen-reports/zen-core';
+import { formatDurationVerbose, computeLatencyPercentiles } from '@zen-reports/zen-core';
 import InfoTooltip from '@/components/shared/InfoTooltip';
 
 export interface TestSpeedConsistencyCardProps {

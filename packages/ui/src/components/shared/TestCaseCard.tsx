@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import type { TestCase, TestStep, TestError, Attachment } from '@arpanp/zen-core';
-import { getTagColor, isFlakyTest } from '@arpanp/zen-core';
+import type { TestCase, TestStep, TestError, Attachment } from '@zen-reports/zen-core';
+import { getTagColor, isFlakyTest } from '@zen-reports/zen-core';
 import TestCaseDetail from './TestCaseDetail';
 
 export interface TestCaseCardProps {

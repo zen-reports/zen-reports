@@ -12,9 +12,9 @@ import { StatusCountBadge } from '@/components/shared/StatusCountBadge';
 import DateFilterControl, { type DateFilterRange } from '@/components/shared/DateFilterControl';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import SearchInput from '@/components/shared/SearchInput';
-import type { HistoryData, HistoryTestRow } from '@arpanp/zen-core';
-import { formatDuration, truncateFileName, calculatePassRate } from '@arpanp/zen-core';
-import { generateExportFilename } from '@arpanp/zen-core';
+import type { HistoryData, HistoryTestRow } from '@zen-reports/zen-core';
+import { formatDuration, truncateFileName, calculatePassRate } from '@zen-reports/zen-core';
+import { generateExportFilename } from '@zen-reports/zen-core';
 
 export interface HistoryTestSectionProps {
   history: HistoryData;

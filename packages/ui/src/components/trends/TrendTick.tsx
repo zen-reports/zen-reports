@@ -1,4 +1,4 @@
-import { formatDateParts } from '@arpanp/zen-core';
+import { formatDateParts } from '@zen-reports/zen-core';
 
 /**
  * Parses timestamp strings from trend data into formatted date and time parts.

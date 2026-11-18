@@ -1,4 +1,4 @@
-import { STEP_CATEGORIES, type StepCategoryKey } from '@arpanp/zen-core';
+import { STEP_CATEGORIES, type StepCategoryKey } from '@zen-reports/zen-core';
 
 export interface StepCategorySummaryCardsProps {
   currentPercentages: Record<StepCategoryKey, number>;

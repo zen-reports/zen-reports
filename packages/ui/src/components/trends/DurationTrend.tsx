@@ -1,6 +1,6 @@
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
-import { DISTINCT_PROJECT_COLORS, formatDateParts, formatDuration } from '@arpanp/zen-core';
-import type { HistoryData } from '@arpanp/zen-core';
+import { DISTINCT_PROJECT_COLORS, formatDateParts, formatDuration } from '@zen-reports/zen-core';
+import type { HistoryData } from '@zen-reports/zen-core';
 import { useMemo } from 'react';
 import {
   CartesianGrid,

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { AppNotification, ResultSummary, TestSuite } from '@arpanp/zen-core';
-import { collectAllCases } from '@arpanp/zen-core';
+import type { AppNotification, ResultSummary, TestSuite } from '@zen-reports/zen-core';
+import { collectAllCases } from '@zen-reports/zen-core';
 import TestResultsHero from './TestResultsHero';
 import ParallelSpeedupCard from './ParallelSpeedupCard';
 import TestSpeedConsistencyCard from './TestSpeedConsistencyCard';

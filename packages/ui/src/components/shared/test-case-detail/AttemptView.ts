@@ -1,4 +1,4 @@
-import type { Attachment, TestCase, TestError, TestStep } from '@arpanp/zen-core';
+import type { Attachment, TestCase, TestError, TestStep } from '@zen-reports/zen-core';
 
 export interface AttemptView {
   status: 'passed' | 'failed' | 'skipped' | 'timedOut' | 'interrupted';

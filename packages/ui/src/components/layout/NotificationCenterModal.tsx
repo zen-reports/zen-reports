@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import BaseModal, { type ModalShortcut } from '@/components/shared/BaseModal';
 import Kbd from '@/components/shared/Kbd';
-import type { AppNotification } from '@arpanp/zen-core';
+import type { AppNotification } from '@zen-reports/zen-core';
 
 export interface NotificationCenterModalProps {
   isOpen: boolean;

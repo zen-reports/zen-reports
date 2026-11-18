@@ -1,5 +1,5 @@
-import type { ResultSummary } from '@arpanp/zen-core';
-import { formatDurationVerbose } from '@arpanp/zen-core';
+import type { ResultSummary } from '@zen-reports/zen-core';
+import { formatDurationVerbose } from '@zen-reports/zen-core';
 
 export interface ParallelSpeedupCardProps {
   summary: ResultSummary;

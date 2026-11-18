@@ -1,4 +1,4 @@
-import type { ResultSummary, TestCase } from '@arpanp/zen-core';
+import type { ResultSummary, TestCase } from '@zen-reports/zen-core';
 
 /**
  * Exact ordered field list for a single history row (single source of truth

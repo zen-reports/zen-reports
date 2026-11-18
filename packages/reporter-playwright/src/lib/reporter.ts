@@ -16,7 +16,7 @@ import {
   getPlaywrightVersion,
   resolveHistoryDbPath,
   writeRunHistory,
-} from '@arpanp/zen-cli';
+} from '@zen-reports/zen-cli';
 import { processAttachments } from './attachmentManager';
 import {
   convertPlaywrightSteps,
@@ -24,19 +24,19 @@ import {
   parseDarkMode,
   sanitizeAnsi,
   setFsModule,
-} from '@arpanp/zen-core';
-import { generateTerminalSummaryTable } from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
+import { generateTerminalSummaryTable } from '@zen-reports/zen-core';
 import { detectPackageManager } from './dataProcessor';
 import { generateHtmlReport } from './htmlReportGenerator';
 import { ProgressPrinter, type ProgressMode, type TestStatus } from './progressPrinter';
-import { buildSuitesFromCases } from '@arpanp/zen-core';
-import { countStepCategories } from '@arpanp/zen-core';
+import { buildSuitesFromCases } from '@zen-reports/zen-core';
+import { countStepCategories } from '@zen-reports/zen-core';
 import type {
   DisabledHistoryConfig,
   HistoryConfig,
   LocalHistoryConfig,
   RemoteHistoryConfig,
-} from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
 import type {
   ReportData,
   ResultSummary,
@@ -44,7 +44,7 @@ import type {
   TestError,
   TestRun as TestRunModel,
   TestSuite,
-} from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
 
 setFsModule(fs);
 
@@ -1078,13 +1078,13 @@ class ZenReporter implements Reporter {
 }
 
 export { getShowReportCommand, updateReportHtmlFiles } from './htmlReportGenerator';
-export { SqliteHistoryStore, RemoteHistoryStore, migrateJsonlToSqlite } from '@arpanp/zen-cli';
+export { SqliteHistoryStore, RemoteHistoryStore, migrateJsonlToSqlite } from '@zen-reports/zen-cli';
 export type {
   CleanHistoryOptions,
   CleanHistoryResult,
   ConflictingRunDetail,
   MigrationOptions,
   MigrationResult,
-} from '@arpanp/zen-cli';
+} from '@zen-reports/zen-cli';
 export type { DisabledHistoryConfig, HistoryConfig, LocalHistoryConfig, RemoteHistoryConfig };
 export default ZenReporter;

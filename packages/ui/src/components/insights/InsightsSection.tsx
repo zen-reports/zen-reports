@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import InsightsGuides, { type InsightModalType } from './InsightsGuides';
-import type { HistoryData } from '@arpanp/zen-core';
+import type { HistoryData } from '@zen-reports/zen-core';
 import FlakyTestsTableSection from './FlakyTestsTableSection';
 import RegressionsTableSection from './RegressionsTableSection';
 import SlowestTestsTableSection from './SlowestTestsTableSection';

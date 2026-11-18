@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { ResultSummary, TestCase } from '@arpanp/zen-core';
+import type { ResultSummary, TestCase } from '@zen-reports/zen-core';
 import InfoTooltip from '@/components/shared/InfoTooltip';
 
 export interface WorkerUtilizationCardProps {

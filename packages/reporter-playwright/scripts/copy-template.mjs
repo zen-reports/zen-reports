@@ -2,7 +2,7 @@
 /**
  * Copies the built zen-ui report template (index.html and hashed favicon
  * assets) into the reporter's dist/ folder so the published bundle stays
- * self-contained. Resolves the template from the @arpanp/zen-ui workspace
+ * self-contained. Resolves the template from the @zen-reports/zen-ui workspace
  * dependency instead of a hard-coded relative path or hashed asset name.
  */
 import fs from 'node:fs';
@@ -13,7 +13,7 @@ const require = createRequire(import.meta.url);
 
 /**
  * Resolves the dist directory of a workspace package by its package.json.
- * @param {string} specifier - Package name to resolve (e.g. '@arpanp/zen-ui').
+ * @param {string} specifier - Package name to resolve (e.g. '@zen-reports/zen-ui').
  * @returns {string} Absolute path to the resolved package's dist directory.
  */
 function resolveUiDistDir(specifier) {
@@ -33,7 +33,7 @@ function copyTemplate(uiDistDir, reporterDistDir) {
   const indexHtml = path.join(uiDistDir, 'index.html');
   if (!fs.existsSync(indexHtml)) {
     throw new Error(
-      'zen-ui dist/index.html not found — run `npm run build -w @arpanp/zen-ui` before building the reporter.'
+      'zen-ui dist/index.html not found — run `npm run build -w @zen-reports/zen-ui` before building the reporter.'
     );
   }
   fs.copyFileSync(indexHtml, path.join(reporterDistDir, 'index.html'));
@@ -47,4 +47,4 @@ function copyTemplate(uiDistDir, reporterDistDir) {
 }
 
 const scriptsDir = path.dirname(new URL(import.meta.url).pathname);
-copyTemplate(resolveUiDistDir('@arpanp/zen-ui'), path.resolve(scriptsDir, '..', 'dist'));
+copyTemplate(resolveUiDistDir('@zen-reports/zen-ui'), path.resolve(scriptsDir, '..', 'dist'));

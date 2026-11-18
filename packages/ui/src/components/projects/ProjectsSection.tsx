@@ -10,8 +10,8 @@ import {
   collectAllCases,
   computeProjectExecutiveKPIs,
   computeProjectStats,
-} from '@arpanp/zen-core';
-import type { TestSuite } from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
 
 export interface ProjectsSectionProps {
   suites: TestSuite[];

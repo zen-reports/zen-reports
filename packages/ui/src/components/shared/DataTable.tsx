@@ -1,4 +1,4 @@
-import { downloadCsv, type CsvColumn, type CsvRowValue } from '@arpanp/zen-core';
+import { downloadCsv, type CsvColumn, type CsvRowValue } from '@zen-reports/zen-core';
 
 export interface ColumnDef<T> {
   key: string;

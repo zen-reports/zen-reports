@@ -1,6 +1,8 @@
 # Contributing
 
-Zen Reporter is an npm workspaces monorepo — all runtime code lives under `packages/` (`core`, `ui`, `reporter`, `server`).
+Zen Reporter is an npm workspaces monorepo — all runtime code lives under `packages/` (`core`, `cli`, `ui`, `reporter-playwright`).
+
+> **Note on `@zen-reports/zen-server`**: The backend ingestion service is maintained in a separate repository ([zen-reports/zen-server](https://github.com/zen-reports/zen-server)) under the restrictive Functional Source License ([FSL-1.1-MIT](https://github.com/zen-reports/zen-server/blob/main/LICENSE)). See [docs/architecture.md](docs/architecture.md) and the [zen-server README](https://github.com/zen-reports/zen-server#readme) for details.
 
 ## Prerequisites
 
@@ -10,8 +12,8 @@ Zen Reporter is an npm workspaces monorepo — all runtime code lives under `pac
 ## Setup (fresh clone)
 
 ```bash
-git clone https://github.com/apatelia/zen-reporter.git
-cd zen-reporter
+git clone https://github.com/zen-reports/zen-reports.git
+cd zen-reports
 npm install
 npm run build
 
@@ -22,29 +24,30 @@ npx playwright install
 `npm run build` bootstraps every package in the correct dependency order:
 
 ```text
-core → reporter (bundle) → ui → reporter (template) → server
+core → cli → ui → reporter:playwright
 ```
 
 ### Why the build order matters
 
-All package `dist/` folders are gitignored, and there is a **build-time cycle** between `ui` and `reporter`:
+All package `dist/` folders are gitignored, and build dependencies flow as follows:
 
-1. `packages/ui/vite.config.ts` imports `@arpanp/zen-reporter`. When Vite bundles the config file, it resolves that package through its `dist/` — so the reporter must be **bundled before** the UI builds. (The `resolve.alias` to reporter source only applies to the app bundle, not to config-file bundling.)
-2. The reporter's full build copies the built UI bundle (`packages/ui/dist/index.html` + `favicon-*.svg`) into its own `dist/` as the self-contained report template — so the **UI must be built before** the reporter's final build.
+1. `packages/cli` depends on `@zen-reports/zen-core`.
+2. `packages/ui` depends on `@zen-reports/zen-core` and uses `@zen-reports/zen-cli` in dev mode for local API endpoints.
+3. `packages/reporter-playwright` depends on `@zen-reports/zen-core` and `@zen-reports/zen-cli`, and copies the built UI bundle (`packages/ui/dist/index.html` + `favicon-*.svg`) into its own `dist/` as the self-contained report template.
 
-The root `build` script resolves this by bundling the reporter, building the UI, then running the full reporter build (template copy and rebuild). If you ever build packages individually, follow the same order. See [docs/architecture.md](docs/architecture.md) for the full dependency graph.
+The root `build` script resolves this by building in order: `core → cli → ui → reporter:playwright`. If you ever build packages individually, follow this order. See [docs/architecture.md](docs/architecture.md) for the full dependency graph.
 
 ## Scripts
 
-| Script                                                                | Purpose                                                        |
-| :-------------------------------------------------------------------- | :------------------------------------------------------------- |
-| `npm run build`                                                       | Full monorepo build in correct fresh-clone order               |
-| `npm run dev`                                                         | Builds `core` + reporter bundle, then starts the UI dev server |
-| `npm run build:core` / `build:ui` / `build:reporter` / `build:server` | Individual package builds                                      |
-| `npm run typecheck`                                                   | Type-check all packages + the test suite                       |
-| `npm run lint` / `npm run lint:unused`                                | ESLint + unused local/parameter checks                         |
-| `npm run format` / `npm run format:check`                             | Prettier write / verify                                        |
-| `npm run spellcheck`                                                  | cspell across code, docs, and comments                         |
+| Script                                                                        | Purpose                                              |
+| :---------------------------------------------------------------------------- | :--------------------------------------------------- |
+| `npm run build`                                                               | Full monorepo build in correct fresh-clone order     |
+| `npm run dev`                                                                 | Builds `core` + `cli`, then starts the UI dev server |
+| `npm run build:core` / `build:cli` / `build:ui` / `build:reporter:playwright` | Individual package builds                            |
+| `npm run typecheck`                                                           | Type-check all packages + the test suite             |
+| `npm run lint` / `npm run lint:unused`                                        | ESLint + unused local/parameter checks               |
+| `npm run format` / `npm run format:check`                                     | Prettier write / verify                              |
+| `npm run spellcheck`                                                          | cspell across code, docs, and comments               |
 
 Prefer these package scripts over invoking `tsc`/`vite`/`prettier` directly.
 

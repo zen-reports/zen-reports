@@ -1,5 +1,5 @@
 {
-  "name": "zen-reporter-monorepo",
+  "name": "zen-reports-monorepo",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -10,8 +10,8 @@
     "email": "arpan.is@gmail.com"
   },
   "license": "MIT",
-  "repository": "github:apatelia/zen-reporter",
-  "homepage": "https://zen-reporter.vercel.app",
+  "repository": "github:zen-reports/zen-reports",
+  "homepage": "https://docs.zenreports.dev",
   "keywords": [
     "playwright",
     "testing",
@@ -21,25 +21,25 @@
     "test automation"
   ],
   "scripts": {
-    "dev": "npm run build:core && npm run build:cli && npm run build:reporter:playwright && npm run dev -w @arpanp/zen-ui",
-    "build:core": "npm run build -w @arpanp/zen-core",
-    "build:cli": "npm run build -w @arpanp/zen-cli",
-    "build:ui": "npm run build -w @arpanp/zen-ui",
-    "build:reporter:playwright": "npm run build -w @arpanp/zen-reporter-playwright",
-    "build": "npm run build:core && npm run build:cli && npm run build:reporter:playwright && npm run build:ui && npm run build:reporter:playwright && npm run build:server",
-    "preview": "npm run preview -w @arpanp/zen-ui",
+    "dev": "npm run build:core && npm run build:cli && npm run dev -w @zen-reports/zen-ui",
+    "build:core": "npm run build -w @zen-reports/zen-core",
+    "build:cli": "npm run build -w @zen-reports/zen-cli",
+    "build:ui": "npm run build -w @zen-reports/zen-ui",
+    "build:reporter:playwright": "npm run build -w @zen-reports/zen-reporter-playwright",
+    "build": "npm run build:core && npm run build:cli && npm run build:ui && npm run build:reporter:playwright",
+    "preview": "npm run preview -w @zen-reports/zen-ui",
     "test": "npx playwright test",
     "show": "npm run build:cli && node packages/cli/bin/zen-reporter.js show",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:unused": "npx tsc --noEmit --noUnusedLocals --noUnusedParameters",
     "spellcheck": "npx cspell lint .",
-    "typecheck:core": "npm run build -w @arpanp/zen-core",
+    "typecheck:core": "npm run build -w @zen-reports/zen-core",
     "typecheck:cli": "tsc -p packages/cli/tsconfig.json --noEmit",
     "typecheck:ui": "tsc -p packages/ui/tsconfig.json --noEmit",
     "typecheck:reporter:playwright": "tsc -p packages/reporter-playwright/tsconfig.lib.json --noEmit",
     "typecheck:tests": "tsc -p tsconfig.json --noEmit",
-    "typecheck": "npm run typecheck:core && npm run typecheck:cli && npm run typecheck:ui && npm run typecheck:reporter:playwright && npm run typecheck:server && npm run typecheck:tests",
+    "typecheck": "npm run typecheck:core && npm run typecheck:cli && npm run typecheck:ui && npm run typecheck:reporter:playwright && npm run typecheck:tests",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"

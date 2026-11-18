@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import type { TestError } from '@arpanp/zen-core';
-import { highlightCodeSnippet, highlightExpectedReceived, sanitizeAnsi } from '@arpanp/zen-core';
+import type { TestError } from '@zen-reports/zen-core';
+import {
+  highlightCodeSnippet,
+  highlightExpectedReceived,
+  sanitizeAnsi,
+} from '@zen-reports/zen-core';
 import type { AttemptView } from './AttemptView';
 
 export interface TestErrorAlertProps {

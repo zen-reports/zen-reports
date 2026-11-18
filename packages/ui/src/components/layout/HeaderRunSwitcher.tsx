@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import type { HistoryRun } from '@arpanp/zen-core';
-import { formatDate, formatDuration, computePassRate } from '@arpanp/zen-core';
+import type { HistoryRun } from '@zen-reports/zen-core';
+import { formatDate, formatDuration, computePassRate } from '@zen-reports/zen-core';
 import { PassRateBadge } from '@/components/shared/PassRateBadge';
 import Kbd from '@/components/shared/Kbd';
 

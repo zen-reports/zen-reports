@@ -1,13 +1,13 @@
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
-import { countStepCategories, STEP_CATEGORIES, StepCategoryKey } from '@arpanp/zen-core';
-import type { HistoryData } from '@arpanp/zen-core';
-import type { TestSuite } from '@arpanp/zen-core';
+import { countStepCategories, STEP_CATEGORIES, StepCategoryKey } from '@zen-reports/zen-core';
+import type { HistoryData } from '@zen-reports/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { StepCategoryChart, type StepCategoryChartPoint } from './step-category/StepCategoryChart';
 import { StepCategorySummaryCards } from './step-category/StepCategorySummaryCards';
 
-export { classifyStepTitle, countStepCategories, STEP_CATEGORIES } from '@arpanp/zen-core';
-export type { StepCategoryConfig, StepCategoryKey } from '@arpanp/zen-core';
+export { classifyStepTitle, countStepCategories, STEP_CATEGORIES } from '@zen-reports/zen-core';
+export type { StepCategoryConfig, StepCategoryKey } from '@zen-reports/zen-core';
 
 export interface StepCategoryTrendProps {
   suites: TestSuite[];

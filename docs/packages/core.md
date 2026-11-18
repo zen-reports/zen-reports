@@ -1,10 +1,10 @@
-# `@arpanp/zen-core` — Shared Types & Utilities
+# `@zen-reports/zen-core` — Shared Types & Utilities
 
-> Package: `packages/core` · Deps: none · Consumed by: `zen-ui`, `zen-reporter`, `zen-server`
+> Package: `packages/core` · Deps: none · Consumed by: `zen-ui`, `zen-cli`, `zen-reporter-playwright` (and standalone `zen-server`)
 
 The foundation package of the monorepo. It contains **no runtime framework
 code** — only shared domain types, schemas, and pure utility functions that
-are reused across the UI, reporter, and server. Published as an ESM/CJS dual
+are reused across the UI, CLI, reporter, and standalone server. Published as an ESM/CJS dual
 package (`dist/index.js` / `dist/index.cjs` with `dist/index.d.ts` types).
 
 ---
@@ -57,10 +57,10 @@ packages/core/
 ## Build & Usage
 
 ```bash
-npm run build -w @arpanp/zen-core   # tsc -p tsconfig.json (dual ESM/CJS emit)
+npm run build -w @zen-reports/zen-core   # tsc -p tsconfig.json (dual ESM/CJS emit)
 ```
 
-All other packages import it as `@arpanp/zen-core` (workspace-resolved).
+All other packages import it as `@zen-reports/zen-core` (workspace-resolved).
 Because it is the single source of truth for report and history schemas, any
-schema change starts here and ripples to `zen-ui`, `zen-reporter`, and
-`zen-server`.
+schema change starts here and ripples to `zen-ui`, `zen-cli`, `zen-reporter-playwright`,
+and the standalone `zen-server` repository.

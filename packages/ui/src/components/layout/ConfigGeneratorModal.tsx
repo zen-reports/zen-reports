@@ -2,8 +2,8 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import BaseModal from '../shared/BaseModal';
 import InfoTooltip from '../shared/InfoTooltip';
 import { copyToClipboard } from '@/utils/clipboard';
-import { escapeHTML, highlightSyntaxLine, parseDarkMode } from '@arpanp/zen-core';
-import type { HistoryConfig, ThemeMode, ThemeName } from '@arpanp/zen-core';
+import { escapeHTML, highlightSyntaxLine, parseDarkMode } from '@zen-reports/zen-core';
+import type { HistoryConfig, ThemeMode, ThemeName } from '@zen-reports/zen-core';
 
 export interface ConfigGeneratorModalProps {
   isOpen: boolean;
@@ -518,7 +518,7 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
           'export default defineConfig({',
           '  reporter: [',
           '    [',
-          "      '@arpanp/zen-reporter-playwright',",
+          "      '@zen-reports/zen-reporter-playwright',",
           '      {',
         ]
       : [
@@ -527,7 +527,7 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
           'module.exports = defineConfig({',
           '  reporter: [',
           '    [',
-          "      '@arpanp/zen-reporter-playwright',",
+          "      '@zen-reports/zen-reporter-playwright',",
           '      {',
         ];
 

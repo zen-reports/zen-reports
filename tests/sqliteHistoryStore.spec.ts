@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 import { SqliteHistoryStore } from '../packages/cli/src/history/SqliteHistoryStore';
-import type { ResultSummary, TestCase } from '@arpanp/zen-core';
+import type { ResultSummary, TestCase } from '@zen-reports/zen-core';
 
 test.describe('SqliteHistoryStore Tests', () => {
   function getDbPath(testInfo: { outputPath: (file: string) => string }): string {

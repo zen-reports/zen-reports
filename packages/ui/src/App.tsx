@@ -21,9 +21,9 @@ import {
   normalizeTheme,
   parseDarkMode,
   toThemeMode,
-} from '@arpanp/zen-core';
-import type { HistoryData, HistoryRun, ThemeMode } from '@arpanp/zen-core';
-import type { ReportData, TestSuite } from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
+import type { HistoryData, HistoryRun, ThemeMode } from '@zen-reports/zen-core';
+import type { ReportData, TestSuite } from '@zen-reports/zen-core';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const ProjectsSection = lazy(() => import('@/components/projects/ProjectsSection'));
@@ -650,7 +650,7 @@ export default function App() {
 
   const handleOpenWebsite = useCallback(() => {
     if (typeof window !== 'undefined') {
-      window.open('https://zen-reporter.vercel.app', '_blank', 'noopener,noreferrer');
+      window.open('https://docs.zenreports.dev', '_blank', 'noopener,noreferrer');
     }
   }, []);
 

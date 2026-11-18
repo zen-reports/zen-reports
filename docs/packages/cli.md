@@ -1,6 +1,6 @@
-# `@arpanp/zen-cli` — Terminal Interface, History Engine & Report Viewer
+# `@zen-reports/zen-cli` — Terminal Interface, History Engine & Report Viewer
 
-`@arpanp/zen-cli` provides the standalone terminal dashboard, command-line interface (`zr` and `zen-reporter`), DuckDB/SQLite local history querying engine, and static HTTP viewer for Zen Reporter.
+`@zen-reports/zen-cli` provides the standalone terminal dashboard, command-line interface (`zr` and `zen-reporter`), DuckDB/SQLite local history querying engine, and static HTTP viewer for Zen Reporter.
 
 ---
 
@@ -8,12 +8,12 @@
 
 ```mermaid
 flowchart LR
-    Reporter["@arpanp/zen-reporter-playwright"] -->|records runs| CLI["@arpanp/zen-cli<br/>(History Engine + Server)"]
+    Reporter["@zen-reports/zen-reporter-playwright"] -->|records runs| CLI["@zen-reports/zen-cli<br/>(History Engine + Server)"]
     CLI -->|reads / updates| DB[("history.db<br/>(DuckDB / SQLite)")]
     CLI -->|serves| Report["zen-report/<br/>(HTML Report)"]
 ```
 
-`@arpanp/zen-cli` acts as the runner-agnostic management and serving layer:
+`@zen-reports/zen-cli` acts as the runner-agnostic management and serving layer:
 
 - **CLI Binaries**: Provides `zr` and `zen-reporter` globally or locally via `npx`.
 - **History Storage**: Contains `SqliteHistoryStore` (DuckDB embedded queries) and `RemoteHistoryStore` (Zen Server sync).
@@ -24,10 +24,10 @@ flowchart LR
 
 ## Installation
 
-Typically installed as a direct dependency of reporter packages (such as `@arpanp/zen-reporter-playwright`), or installed explicitly for standalone report viewing:
+Typically installed as a direct dependency of reporter packages (such as `@zen-reports/zen-reporter-playwright`), or installed explicitly for standalone report viewing:
 
 ```bash
-npm install @arpanp/zen-cli
+npm install @zen-reports/zen-cli
 ```
 
 ---

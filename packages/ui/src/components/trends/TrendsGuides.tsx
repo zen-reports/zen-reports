@@ -1,5 +1,5 @@
 import GuideModal from '@/components/shared/GuideModal';
-import { STEP_CATEGORIES } from '@arpanp/zen-core';
+import { STEP_CATEGORIES } from '@zen-reports/zen-core';
 
 interface TrendsGuidesProps {
   passRateModalOpen: boolean;

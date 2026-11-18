@@ -1,4 +1,4 @@
-import type { Attachment } from '@arpanp/zen-core';
+import type { Attachment } from '@zen-reports/zen-core';
 import {
   isImageAttachment,
   isVideoAttachment,

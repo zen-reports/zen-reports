@@ -1,5 +1,5 @@
-import type { TestSuite } from '@arpanp/zen-core';
-import { getTestCaseEffectiveStatus } from '@arpanp/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
+import { getTestCaseEffectiveStatus } from '@zen-reports/zen-core';
 import { useMemo, useState, useCallback, useEffect } from 'react';
 import MultiSelectFilter, { FilterCountBadge } from '@/components/shared/MultiSelectFilter';
 import StatCard from '@/components/shared/StatCard';

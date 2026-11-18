@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { TestSuite, TestCase } from '@arpanp/zen-core';
-import { formatDurationVerbose, getTestCaseEffectiveStatus } from '@arpanp/zen-core';
+import type { TestSuite, TestCase } from '@zen-reports/zen-core';
+import { formatDurationVerbose, getTestCaseEffectiveStatus } from '@zen-reports/zen-core';
 import TestCaseCard from '@/components/shared/TestCaseCard';
 import TestSuiteNode from './TestSuiteNode';
 

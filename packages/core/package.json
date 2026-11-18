@@ -1,5 +1,5 @@
 {
-  "name": "@arpanp/zen-core",
+  "name": "@zen-reports/zen-core",
   "version": "1.0.0-dev",
   "type": "module",
   "description": "Shared types, schemas, and utilities for Zen Reporter",

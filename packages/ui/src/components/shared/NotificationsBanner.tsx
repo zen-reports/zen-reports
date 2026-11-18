@@ -1,5 +1,5 @@
 import Kbd from '@/components/shared/Kbd';
-import type { AppNotification } from '@arpanp/zen-core';
+import type { AppNotification } from '@zen-reports/zen-core';
 
 export interface NotificationsBannerProps {
   notifications: AppNotification[];

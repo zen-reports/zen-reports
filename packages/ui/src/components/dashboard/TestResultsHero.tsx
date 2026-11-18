@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import type { ResultSummary, TestSuite } from '@arpanp/zen-core';
-import { formatDuration } from '@arpanp/zen-core';
-import { computeStatusPercentages } from '@arpanp/zen-core';
+import type { ResultSummary, TestSuite } from '@zen-reports/zen-core';
+import { formatDuration } from '@zen-reports/zen-core';
+import { computeStatusPercentages } from '@zen-reports/zen-core';
 import PassRateRing from './PassRateRing';
 
 export interface TestResultsHeroProps {

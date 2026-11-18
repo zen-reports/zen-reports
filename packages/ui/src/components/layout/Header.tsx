@@ -1,7 +1,7 @@
 import HeaderRunSwitcher from '@/components/layout/HeaderRunSwitcher';
 import ThemeControls from '@/components/layout/ThemeControls';
-import { formatDateRange, formatDuration } from '@arpanp/zen-core';
-import type { HistoryData, HistoryRun, ResultSummary, ThemeMode } from '@arpanp/zen-core';
+import { formatDateRange, formatDuration } from '@zen-reports/zen-core';
+import type { HistoryData, HistoryRun, ResultSummary, ThemeMode } from '@zen-reports/zen-core';
 
 export interface HeaderProps {
   projectName: string | undefined;

@@ -25,7 +25,7 @@ test(
     tag: ['@attachment'],
   },
   async ({ page, browserName }, testInfo) => {
-    await page.goto('https://zen-reporter.vercel.app');
+    await page.goto('https://docs.zenreports.dev');
 
     // Click the Getting started link.
     await page.getByRole('link', { name: 'Getting started' }).click();

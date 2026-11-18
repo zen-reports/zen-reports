@@ -15,8 +15,7 @@
     "jsx": "react-jsx",
     "types": ["node", "vite/client"],
     "paths": {
-      "@arpanp/zen-core": ["./packages/core/src/index.ts"],
-      "@arpanp/zen-reporter": ["./packages/reporter/src/lib/reporter.ts"]
+      "@zen-reports/zen-core": ["./packages/core/src/index.ts"]
     }
   },
   "include": ["tests/**/*.ts", "*.config.ts", "*.config.mjs"],

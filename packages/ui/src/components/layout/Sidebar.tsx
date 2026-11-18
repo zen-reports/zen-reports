@@ -371,7 +371,7 @@ export default function Sidebar({
       >
         {isCollapsed ? (
           <a
-            href="https://zen-reporter.vercel.app"
+            href="https://docs.zenreports.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="group cursor-pointer p-1"
@@ -393,7 +393,7 @@ export default function Sidebar({
             {/* Top Row: Logo, Brand Link & Version */}
             <div className="flex items-center gap-3 min-w-0">
               <a
-                href="https://zen-reporter.vercel.app"
+                href="https://docs.zenreports.dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 group cursor-pointer"
@@ -412,7 +412,7 @@ export default function Sidebar({
               </a>
               <div className="flex flex-col min-w-0 justify-center">
                 <a
-                  href="https://zen-reporter.vercel.app"
+                  href="https://docs.zenreports.dev"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-base font-bold tracking-tight text-accent-blue dark:text-accent-blue group hover:underline truncate leading-tight transition-colors cursor-pointer"

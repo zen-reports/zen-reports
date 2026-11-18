@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import { truncateFileName, calculatePassRate } from '@arpanp/zen-core';
-import { collectAllCases, computeFileStats, type FileStats } from '@arpanp/zen-core';
-import type { TestSuite } from '@arpanp/zen-core';
+import { truncateFileName, calculatePassRate } from '@zen-reports/zen-core';
+import { collectAllCases, computeFileStats, type FileStats } from '@zen-reports/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
 import { usePagination } from '@/components/pagination/usePagination';
 import { PaginationFooter } from '@/components/pagination/PaginationFooter';
 import {
@@ -13,7 +13,7 @@ import {
 import { PassRateBadge } from '@/components/shared/PassRateBadge';
 import { StatusCountBadge } from '@/components/shared/StatusCountBadge';
 import SearchInput from '@/components/shared/SearchInput';
-import { generateExportFilename } from '@arpanp/zen-core';
+import { generateExportFilename } from '@zen-reports/zen-core';
 
 export interface FileSummaryProps {
   suites: TestSuite[];

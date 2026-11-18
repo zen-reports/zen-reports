@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { getStepCodeSnippet, sanitizeAnsi } from '@arpanp/zen-core';
-import { buildSuitesFromCases } from '@arpanp/zen-core';
+import { getStepCodeSnippet, sanitizeAnsi } from '@zen-reports/zen-core';
+import { buildSuitesFromCases } from '@zen-reports/zen-core';
 import type {
   ReportData,
   ResultSummary,
@@ -9,7 +9,7 @@ import type {
   TestError,
   TestRun,
   TestStep,
-} from '@arpanp/zen-core';
+} from '@zen-reports/zen-core';
 
 /**
  * Detects the package manager used in the target directory based on lockfiles or package.json settings.

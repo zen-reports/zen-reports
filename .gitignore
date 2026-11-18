@@ -42,4 +42,4 @@ logs/*.log
 
 # Package build output
 arpanp-zen-core-*.tgz
-arpanp-zen-reporter-*.tgz
+zen-reports-zen-reporter-*.tgz

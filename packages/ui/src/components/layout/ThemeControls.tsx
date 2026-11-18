@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { ThemeMode } from '@arpanp/zen-core';
+import type { ThemeMode } from '@zen-reports/zen-core';
 
 export interface ThemeControlsProps {
   theme: ThemeMode;

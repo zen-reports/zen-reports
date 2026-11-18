@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { extractNotificationsFromReport } from '@arpanp/zen-core';
-import type { AppNotification, ReportData, UserNotificationPreferences } from '@arpanp/zen-core';
+import { extractNotificationsFromReport } from '@zen-reports/zen-core';
+import type {
+  AppNotification,
+  ReportData,
+  UserNotificationPreferences,
+} from '@zen-reports/zen-core';
 
 const NOTIFICATIONS_STORAGE_KEY = 'zen:notifications:preferences';
 

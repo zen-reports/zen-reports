@@ -5,8 +5,8 @@ import { PassRateBadge } from '@/components/shared/PassRateBadge';
 import Kbd from '@/components/shared/Kbd';
 import { usePagination } from '@/components/pagination/usePagination';
 import { PaginationFooter } from '@/components/pagination/PaginationFooter';
-import type { HistoryRun } from '@arpanp/zen-core';
-import { formatDate, formatDuration, computePassRate } from '@arpanp/zen-core';
+import type { HistoryRun } from '@zen-reports/zen-core';
+import { formatDate, formatDuration, computePassRate } from '@zen-reports/zen-core';
 
 export interface RunSwitcherModalProps {
   isOpen: boolean;

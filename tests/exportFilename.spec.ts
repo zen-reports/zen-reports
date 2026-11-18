@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { formatDateSlug, formatTimeHHMM, generateExportFilename, slugify } from '@arpanp/zen-core';
+import {
+  formatDateSlug,
+  formatTimeHHMM,
+  generateExportFilename,
+  slugify,
+} from '@zen-reports/zen-core';
 
 test.describe('Dynamic CSV Export Filename Tests', () => {
   const fixedDate = new Date('2026-10-05T14:30:00.000Z');

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { HEALTH_CATEGORY_CONFIG } from '@arpanp/zen-core';
+import { HEALTH_CATEGORY_CONFIG } from '@zen-reports/zen-core';
 import InfoTooltip from '../shared/InfoTooltip';
 
 export interface PassRateRingProps {

@@ -1,5 +1,5 @@
 {
-  "name": "@arpanp/zen-cli",
+  "name": "@zen-reports/zen-cli",
   "version": "1.0.0-dev",
   "type": "module",
   "description": "Interactive terminal dashboard, CLI utilities, and history engine for Zen Reporter",
@@ -35,7 +35,7 @@
     "build": "mkdir -p dist && npm run build:cli"
   },
   "dependencies": {
-    "@arpanp/zen-core": "^1.0.0-dev",
+    "@zen-reports/zen-core": "^1.0.0-dev",
     "@clack/prompts": "^1.9.0",
     "picocolors": "^1.1.1"
   },

@@ -12,10 +12,10 @@ import { StatusCountBadge } from '@/components/shared/StatusCountBadge';
 import DateFilterControl, { type DateFilterRange } from '@/components/shared/DateFilterControl';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import SearchInput from '@/components/shared/SearchInput';
-import type { HistoryRun } from '@arpanp/zen-core';
-import { formatDateLocal, formatDuration } from '@arpanp/zen-core';
-import { generateExportFilename } from '@arpanp/zen-core';
-import { computePassRate } from '@arpanp/zen-core';
+import type { HistoryRun } from '@zen-reports/zen-core';
+import { formatDateLocal, formatDuration } from '@zen-reports/zen-core';
+import { generateExportFilename } from '@zen-reports/zen-core';
+import { computePassRate } from '@zen-reports/zen-core';
 
 export interface HistoryRunsTableSectionProps {
   runs: HistoryRun[];

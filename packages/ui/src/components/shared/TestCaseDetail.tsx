@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
-import type { Attachment, TestCase, TestStep } from '@arpanp/zen-core';
-import { extractVisualDiffPairs } from '@arpanp/zen-core';
+import type { Attachment, TestCase, TestStep } from '@zen-reports/zen-core';
+import { extractVisualDiffPairs } from '@zen-reports/zen-core';
 import SearchInput from './SearchInput';
 import { VisualDiffViewer } from '../visual-regression/VisualDiffViewer';
 import { buildAttempts, collectAttemptAttachments } from './test-case-detail/AttemptView';

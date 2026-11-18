@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { TestStep } from '@arpanp/zen-core';
-import { getStepCodeSnippet, highlightCodeSnippet } from '@arpanp/zen-core';
+import type { TestStep } from '@zen-reports/zen-core';
+import { getStepCodeSnippet, highlightCodeSnippet } from '@zen-reports/zen-core';
 import { statusConfig } from './AttemptView';
 
 export interface StepItemProps {

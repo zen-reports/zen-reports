@@ -1,7 +1,7 @@
 import type { TestResult } from '@playwright/test/reporter';
 import * as fs from 'fs';
 import * as path from 'path';
-import type { TestCase as TestCaseModel } from '@arpanp/zen-core';
+import type { TestCase as TestCaseModel } from '@zen-reports/zen-core';
 
 /**
  * Resolves a file extension based on content type and attachment name.

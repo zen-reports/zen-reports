@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import type { ReportData, TestSuite } from '@arpanp/zen-core';
+import type { ReportData, TestSuite } from '@zen-reports/zen-core';
 
 /**
  * Recursively strips granular execution data (steps, sub-steps, attachments, logs, errors)

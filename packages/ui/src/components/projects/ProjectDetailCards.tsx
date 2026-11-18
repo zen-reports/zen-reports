@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import type { ProjectStats } from '@arpanp/zen-core';
-import { formatDuration } from '@arpanp/zen-core';
+import type { ProjectStats } from '@zen-reports/zen-core';
+import { formatDuration } from '@zen-reports/zen-core';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import TestCaseCard from '@/components/shared/TestCaseCard';
 import SearchInput from '@/components/shared/SearchInput';

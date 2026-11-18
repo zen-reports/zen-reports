@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import type { TestSuite } from '@arpanp/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
 import StatCard from '@/components/shared/StatCard';
 import InfoTooltip from '@/components/shared/InfoTooltip';
 
-import { formatDuration, truncateMiddlePath } from '@arpanp/zen-core';
-import { collectAllCases, computeFileStats, type FileStats } from '@arpanp/zen-core';
+import { formatDuration, truncateMiddlePath } from '@zen-reports/zen-core';
+import { collectAllCases, computeFileStats, type FileStats } from '@zen-reports/zen-core';
 
 export interface FileMetricsSectionProps {
   suites: TestSuite[];

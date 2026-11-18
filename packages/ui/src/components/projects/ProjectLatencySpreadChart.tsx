@@ -14,8 +14,8 @@ import {
   TooltipPayloadEntry,
 } from 'recharts';
 import { useMemo, type ReactElement, type ReactNode } from 'react';
-import type { ProjectStats } from '@arpanp/zen-core';
-import { formatDurationVerbose } from '@arpanp/zen-core';
+import type { ProjectStats } from '@zen-reports/zen-core';
+import { formatDurationVerbose } from '@zen-reports/zen-core';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 
 export interface ProjectLatencySpreadChartProps {

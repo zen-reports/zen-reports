@@ -6,8 +6,8 @@ import type { DateFilterRange } from '@/components/shared/DateFilterControl';
 import DateFilterControl from '@/components/shared/DateFilterControl';
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
 import SearchInput from '@/components/shared/SearchInput';
-import type { HistoryFlakyRow } from '@arpanp/zen-core';
-import { formatDateLocal, generateExportFilename } from '@arpanp/zen-core';
+import type { HistoryFlakyRow } from '@zen-reports/zen-core';
+import { formatDateLocal, generateExportFilename } from '@zen-reports/zen-core';
 import { useMemo, useState } from 'react';
 
 export interface FlakyTestsTableSectionProps {

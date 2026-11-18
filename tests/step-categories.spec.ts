@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { classifyStepTitle, countStepCategories, STEP_CATEGORIES } from '@arpanp/zen-core';
-import type { TestStep, TestSuite } from '@arpanp/zen-core';
+import { classifyStepTitle, countStepCategories, STEP_CATEGORIES } from '@zen-reports/zen-core';
+import type { TestStep, TestSuite } from '@zen-reports/zen-core';
 
 function mockStep(title: string, subSteps?: TestStep[]): TestStep {
   return {
@@ -82,7 +82,7 @@ test.describe('Step Category Classifier & Trends', () => {
       expect(classifyStepTitle('Click')).toBe('actions');
       expect(classifyStepTitle('Fill "zr history"')).toBe('actions');
       expect(classifyStepTitle('Navigate')).toBe('actions');
-      expect(classifyStepTitle('page.goto("https://zen-reporter.vercel.app")')).toBe('actions');
+      expect(classifyStepTitle('page.goto("https://docs.zenreports.dev")')).toBe('actions');
       expect(classifyStepTitle('locator.press("Enter")')).toBe('actions');
       expect(classifyStepTitle('Hover')).toBe('actions');
       expect(classifyStepTitle('Select option')).toBe('actions');

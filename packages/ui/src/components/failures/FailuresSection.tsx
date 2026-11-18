@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import type { TestSuite } from '@arpanp/zen-core';
-import { extractFailedTests } from '@arpanp/zen-core';
+import type { TestSuite } from '@zen-reports/zen-core';
+import { extractFailedTests } from '@zen-reports/zen-core';
 import MultiSelectFilter, { FilterCountBadge } from '@/components/shared/MultiSelectFilter';
 import StatCard from '@/components/shared/StatCard';
 import SearchInput from '@/components/shared/SearchInput';

@@ -1,7 +1,7 @@
 import LearnMoreButton from '@/components/shared/LearnMoreButton';
-import { formatDateParts } from '@arpanp/zen-core';
-import type { HistoryData } from '@arpanp/zen-core';
-import { computePassRate } from '@arpanp/zen-core';
+import { formatDateParts } from '@zen-reports/zen-core';
+import type { HistoryData } from '@zen-reports/zen-core';
+import { computePassRate } from '@zen-reports/zen-core';
 import {
   CartesianGrid,
   Line,

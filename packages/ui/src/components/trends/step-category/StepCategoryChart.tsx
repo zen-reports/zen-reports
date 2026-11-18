@@ -1,4 +1,4 @@
-import { STEP_CATEGORIES } from '@arpanp/zen-core';
+import { STEP_CATEGORIES } from '@zen-reports/zen-core';
 import { useState } from 'react';
 import {
   Bar,

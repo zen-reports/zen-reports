@@ -25,8 +25,8 @@ export default defineConfig({
         'util',
         '@playwright/test',
         '@playwright/test/reporter',
-        '@arpanp/zen-core',
-        '@arpanp/zen-cli',
+        '@zen-reports/zen-core',
+        '@zen-reports/zen-cli',
       ],
       output: {
         exports: 'named',

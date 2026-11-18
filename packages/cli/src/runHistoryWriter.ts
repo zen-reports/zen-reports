@@ -1,7 +1,11 @@
 import * as path from 'path';
 import { SqliteHistoryStore } from './history/SqliteHistoryStore';
 import { RemoteHistoryStore } from './history/RemoteHistoryStore';
-import type { HistoryConfig, ResultSummary, TestCase as TestCaseModel } from '@arpanp/zen-core';
+import type {
+  HistoryConfig,
+  ResultSummary,
+  TestCase as TestCaseModel,
+} from '@zen-reports/zen-core';
 
 export interface ShardConfig {
   current: number;
