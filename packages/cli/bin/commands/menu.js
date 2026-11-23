@@ -100,7 +100,7 @@ async function interactiveHistoryMenu(cwd) {
           hint: 'Tests that passed previously and failed in latest',
         },
         { value: 'slow', label: 'Slow Tests', hint: 'Top slowest test executions across runs' },
-        { value: 'trend', label: 'Trend', hint: 'Per-run pass rates over time' },
+        { value: 'trends', label: 'Trends', hint: 'Pass rate and duration trends over time' },
         {
           value: 'report',
           label: 'Generate Report',
@@ -150,9 +150,30 @@ async function interactiveHistoryMenu(cwd) {
         if (clack.isCancel(limitInput)) {
           continue;
         }
-        await handleHistory(['slow', '--limit', limitInput], cwd);
-      } else if (action === 'trend') {
-        await handleHistory(['trend', '--interactive'], cwd);
+        await handleHistory(['slow', '--limit', limitInput, '--interactive'], cwd);
+      } else if (action === 'trends') {
+        const trendType = await clack.select({
+          message: `Select trend metric to visualize: ${pc.dim('(Esc to go back)')}`,
+          options: [
+            {
+              value: 'passrate',
+              label: '1. Pass Rate trend',
+              hint: 'Visualize pass rate % across recent test runs',
+            },
+            {
+              value: 'duration',
+              label: '2. Duration trend',
+              hint: 'Visualize execution duration across recent test runs',
+            },
+            { value: 'back', label: '← Back', hint: 'Return to history menu' },
+          ],
+        });
+
+        if (clack.isCancel(trendType) || trendType === 'back') {
+          continue;
+        }
+
+        await handleHistory(['trends', trendType, '--interactive'], cwd);
       } else if (action === 'report') {
         const s = clack.spinner();
         s.start('Generating history report (history.json)...');

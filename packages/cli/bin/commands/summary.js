@@ -1,12 +1,14 @@
 import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import { formatDuration, padCenter } from './common.js';
+import { computePassRate, formatDuration } from '@zen-reports/zen-core';
+import { padCenter } from './common.js';
 
 /**
  * Recursively collects failed test cases from a suite hierarchy array into an output array.
  *
  * @param {object[]} suites - Suite hierarchy array.
  * @param {object[]} [failedCases=[]] - Output array accumulating failed test case objects.
+ * @returns {object[]} Array of failed test case objects.
  */
 function collectFailedCases(suites, failedCases = []) {
   if (!suites || !Array.isArray(suites)) return failedCases;
@@ -36,30 +38,45 @@ export function generateMarkdownSummaryFromReport(reportData) {
   const summary = testRun.summary || {};
   const total = summary.total || 0;
   const passed = summary.passed || 0;
+  const flaky = summary.flaky || 0;
   const failed = summary.failed || 0;
   const timedOut = summary.timedOut || 0;
   const skipped = summary.skipped || 0;
   const interrupted = summary.interrupted || 0;
   const hasFailures = failed > 0 || timedOut > 0 || interrupted > 0;
-  const statusStr = hasFailures ? '❌ FAILED' : '✅ PASSED';
-  const passRate = total > 0 ? ((passed / total) * 100).toFixed(1).replace(/\.0$/, '') : '0';
+  const statusStr = hasFailures ? 'FAILED' : 'PASSED';
+  const passRate = `${computePassRate(summary)}%`;
   const durationStr = formatDuration(summary.duration || 0);
 
   const titleProject = testRun.projectName || 'Test Automation Project';
   const titleRun = testRun.testRunName || 'Test Run';
 
   let md = `\n### 📊 Test Run Summary: ${titleProject} — ${titleRun}\n\n`;
-  md += `**Status:** ${statusStr}\n`;
-  md += `**Duration:** ${durationStr}\n`;
-  md += `**Pass Rate:** ${passRate}%\n\n`;
 
-  const headers = ['Total', 'Passed', 'Failed', 'Timed Out', 'Skipped'];
-  const values = [String(total), String(passed), String(failed), String(timedOut), String(skipped)];
-
-  if (interrupted > 0) {
-    headers.push('Interrupted');
-    values.push(String(interrupted));
-  }
+  const headers = [
+    'Status',
+    'Duration',
+    'Pass Rate',
+    'Total',
+    'Passed',
+    'Flaky',
+    'Failed',
+    'Timed Out',
+    'Interrupted',
+    'Skipped',
+  ];
+  const values = [
+    statusStr,
+    durationStr,
+    passRate,
+    String(total),
+    String(passed),
+    String(flaky),
+    String(failed),
+    String(timedOut),
+    String(interrupted),
+    String(skipped),
+  ];
 
   const widths = headers.map((h, i) => Math.max(h.length, values[i].length, 3));
   const headerRow = `| ${headers.map((h, i) => padCenter(h, widths[i])).join(' | ')} |`;
@@ -95,6 +112,7 @@ export function generateMarkdownSummaryFromReport(reportData) {
  * Handles the `zr summary` command by reading `report.json` and printing a Markdown summary.
  *
  * @param {string} [cwd=process.cwd()] - Current working directory.
+ * @returns {void}
  */
 export function handleSummary(cwd = process.cwd()) {
   const outputDir = process.env.PW_REPORTER_OUTPUT || 'zen-report';

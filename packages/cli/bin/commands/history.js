@@ -19,8 +19,9 @@ import {
   SRC,
   TESTS_SUMMARY_SQL,
   TREND_SQL,
+  DURATION_TREND_SQL,
 } from './common.js';
-import { generateExportFilename } from '@zen-reports/zen-core';
+import { formatDuration, generateExportFilename } from '@zen-reports/zen-core';
 import { printHelp } from './help.js';
 
 /**
@@ -138,6 +139,21 @@ export function parseRangeSelection(input, max) {
   }
 
   return Array.from(selected).sort((a, b) => a - b);
+}
+
+/**
+ * Extracts positional arguments from a CLI argument list by excluding flags and option parameter values.
+ *
+ * @param {string[]} args - Raw CLI arguments.
+ * @returns {string[]} Filtered positional arguments.
+ */
+export function extractPositionalArgs(args) {
+  return args.filter((arg, idx, arr) => {
+    if (arg.startsWith('-')) return false;
+    const prev = arr[idx - 1];
+    if (prev && (prev === '--limit' || prev === '--export' || prev === '-e')) return false;
+    return true;
+  });
 }
 
 /**
@@ -609,8 +625,9 @@ export async function handleHistory(subArgs, cwd = process.cwd()) {
   const isAllFlag = subArgs.includes('--all');
   const limitArgIdx = subArgs.indexOf('--limit');
   const explicitLimit = limitArgIdx >= 0 ? parseInt(subArgs[limitArgIdx + 1], 10) : undefined;
+  const isExplicitInteractive = subArgs.includes('--interactive');
   const isInteractiveSession =
-    subArgs.includes('--interactive') ||
+    isExplicitInteractive ||
     Boolean(
       process.stdin.isTTY && process.stdout.isTTY && !isAllFlag && explicitLimit === undefined
     );
@@ -642,6 +659,11 @@ export async function handleHistory(subArgs, cwd = process.cwd()) {
       rowsToExport = rowsToExport.slice(0, opts.limit);
     }
 
+    await printPaginatedTable(table, emptyMessage, entityName, {
+      ...opts,
+      fromMenu: isExplicitInteractive,
+    });
+
     if (isExport) {
       const defaultFilename = generateExportFilename(entityName.replace(/\s+/g, '-'));
       exportTableToCsv(
@@ -652,8 +674,6 @@ export async function handleHistory(subArgs, cwd = process.cwd()) {
         cwd
       );
     }
-
-    await printPaginatedTable(table, emptyMessage, entityName, opts);
   };
 
   try {
@@ -702,21 +722,66 @@ export async function handleHistory(subArgs, cwd = process.cwd()) {
               : '10';
         const limit = Math.max(1, parseInt(rawLimit, 10) || 10);
         const table = await runQuery(conn, SLOW_SQL, [limit]);
-        if (isExport) {
-          const defaultFilename = generateExportFilename('slow-tests');
-          exportTableToCsv(table, defaultFilename, exportTargetPath, historyDir, cwd);
-        }
-        printTable(table, 'No slow tests found.', 'slow tests');
+        await handleDataset(table, 'No slow tests found.', 'slow tests', {
+          all: isAllFlag,
+          limit,
+          interactive: isInteractiveSession && !isExport,
+        });
         break;
       }
 
       case 'trend':
-        await handleDataset(await runQuery(conn, TREND_SQL), 'No trend data found.', 'trend', {
-          all: isAllFlag,
-          limit: explicitLimit,
-          interactive: isInteractiveSession && !isExport,
-        });
+      case 'trends': {
+        const positionalArgs = extractPositionalArgs(subArgs.slice(1));
+        const trendMetric = positionalArgs[0] || 'passrate';
+        if (trendMetric !== 'passrate' && trendMetric !== 'duration') {
+          throw new Error(
+            `Unknown trend metric "${trendMetric}". Available metrics: "passrate", "duration".`
+          );
+        }
+        if (trendMetric === 'duration') {
+          const queryRes = await runQuery(conn, DURATION_TREND_SQL);
+          const transformedRows = (queryRes.rows || []).map((r) => {
+            let deltaStr = '-';
+            if (r.raw_delta !== null && r.raw_delta !== undefined) {
+              if (r.raw_delta > 0) {
+                deltaStr = `+${formatDuration(r.raw_delta)}`;
+              } else if (r.raw_delta < 0) {
+                deltaStr = `-${formatDuration(Math.abs(r.raw_delta))}`;
+              }
+            }
+            return {
+              run_name: r.run_name,
+              started_at: r.started_at,
+              duration_ms: r.duration_ms,
+              delta: deltaStr,
+            };
+          });
+
+          const durationTable = {
+            columns: ['run_name', 'started_at', 'duration_ms', 'delta'],
+            rows: transformedRows,
+          };
+
+          await handleDataset(durationTable, 'No duration trend data found.', 'duration trend', {
+            all: isAllFlag,
+            limit: explicitLimit,
+            interactive: isInteractiveSession && !isExport,
+          });
+        } else {
+          await handleDataset(
+            await runQuery(conn, TREND_SQL),
+            'No trend data found.',
+            'pass rate trend',
+            {
+              all: isAllFlag,
+              limit: explicitLimit,
+              interactive: isInteractiveSession && !isExport,
+            }
+          );
+        }
         break;
+      }
 
       case 'files':
         await handleDataset(
@@ -737,25 +802,35 @@ export async function handleHistory(subArgs, cwd = process.cwd()) {
         break;
 
       case 'query': {
-        const queryArgs = subArgs.slice(1).filter((a, idx, arr) => {
-          if (a === '--export' || a === '-e') return false;
-          const prev = arr[idx - 1];
-          if ((prev === '--export' || prev === '-e') && !a.startsWith('-')) return false;
-          return true;
-        });
+        const queryArgs = extractPositionalArgs(subArgs.slice(1));
         const sqlText = queryArgs.join(' ').trim();
         if (!sqlText) {
           throw new Error('Usage: zr history query "<SQL>"');
         }
         const usesFrom = /\bfrom\b/i.test(sqlText);
-        const sql = usesFrom ? sqlText : `SELECT * FROM ${SRC} ${sqlText}`;
+        let sql = sqlText;
+        if (!usesFrom) {
+          if (/^\s*select\b/i.test(sqlText)) {
+            // User wrote: SELECT <cols> WHERE ... (missing FROM history_src)
+            const clauseMatch = sqlText.match(/\b(where|group\s+by|having|order\s+by|limit)\b/i);
+            if (clauseMatch && clauseMatch.index !== undefined) {
+              const idx = clauseMatch.index;
+              sql = `${sqlText.slice(0, idx).trimEnd()} FROM ${SRC} ${sqlText.slice(idx)}`;
+            } else {
+              sql = `${sqlText} FROM ${SRC}`;
+            }
+          } else {
+            // User wrote bare clauses: WHERE ... or ORDER BY ...
+            sql = `SELECT * FROM ${SRC} ${sqlText}`;
+          }
+        }
         try {
           const result = await runQuery(conn, sql);
-          if (isExport) {
-            const defaultFilename = generateExportFilename('query-results');
-            exportTableToCsv(result, defaultFilename, exportTargetPath, historyDir, cwd);
-          }
-          printTable(result, 'No matching records found.', 'records');
+          await handleDataset(result, 'No matching records found.', 'records', {
+            all: isAllFlag,
+            limit: explicitLimit,
+            interactive: isInteractiveSession && !isExport,
+          });
         } catch (e) {
           throw new Error(`Query failed: ${e?.message || e}`, { cause: e });
         }

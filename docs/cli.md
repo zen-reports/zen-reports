@@ -71,22 +71,23 @@ When tests are executed with Zen Reporter configured in Playwright (`npx playwri
 
 ### Subcommands
 
-| Command                           | Description                                                                               |
-| :-------------------------------- | :---------------------------------------------------------------------------------------- |
-| `npx zr history`                  | List historical test runs with start time, duration, tests count, and pass/fail metrics.  |
-| `npx zr history runs`             | Alias for `npx zr history`.                                                               |
-| `npx zr history files`            | Group and summarize historical execution metrics by spec file.                            |
-| `npx zr history tests`            | Aggregate granular execution counts, pass rates, and average durations per test case.     |
-| `npx zr history flaky`            | Identify flaky tests that failed in some runs and passed in others or recovered on retry. |
-| `npx zr history regressions`      | List tests that passed in a previous run but failed or timed out in the latest run.       |
-| `npx zr history slow [--limit N]` | Rank slowest test cases across runs by average duration (default limit: 10).              |
-| `npx zr history trend`            | Display historical pass rate percentages per run over time.                               |
-| `npx zr history report`           | Build or update `history.json` for report dashboard inspection without running tests.     |
-| `npx zr history query "<SQL>"`    | Execute arbitrary SQL queries over recorded test runs.                                    |
+| Command                            | Description                                                                               |
+| :--------------------------------- | :---------------------------------------------------------------------------------------- |
+| `npx zr history`                   | List historical test runs with start time, duration, tests count, and pass/fail metrics.  |
+| `npx zr history runs`              | Alias for `npx zr history`.                                                               |
+| `npx zr history files`             | Group and summarize historical execution metrics by spec file.                            |
+| `npx zr history tests`             | Aggregate granular execution counts, pass rates, and average durations per test case.     |
+| `npx zr history flaky`             | Identify flaky tests that failed in some runs and passed in others or recovered on retry. |
+| `npx zr history regressions`       | List tests that passed in a previous run but failed or timed out in the latest run.       |
+| `npx zr history slow [--limit N]`  | Rank slowest test cases across runs by average duration (default limit: 10).              |
+| `npx zr history trends [passrate]` | Display historical pass rate percentages per run over time with delta changes.            |
+| `npx zr history trends duration`   | Display execution duration progression per run over time with delta changes.              |
+| `npx zr history report`            | Build or update `history.json` for report dashboard inspection without running tests.     |
+| `npx zr history query "<SQL>"`     | Execute arbitrary SQL queries over recorded test runs.                                    |
 
 ### Global Table & Display Options
 
-All table-producing history commands (`runs`, `files`, `tests`, `flaky`, `regressions`, `slow`, `trend`, `query`) support standard display flags:
+All table-producing history commands (`runs`, `files`, `tests`, `flaky`, `regressions`, `slow`, `trends`, `query`) support standard display flags:
 
 - **`--all`**: Display or export all records, bypassing the default 25-record pagination window.
 - **`--limit <N>`**: Limit output or export to the top `N` records (e.g. `--limit 10`).
@@ -191,7 +192,10 @@ Execute custom SQL queries against your test run history. When DuckDB connects, 
 # Query total test count by project
 npx zr history query "SELECT project, count(*) as tests FROM history_src GROUP BY project"
 
-# Shorthand query omitting SELECT/FROM (automatically queries FROM history_src)
+# Shorthand query selecting specific columns without typing FROM history_src
+npx zr history query "SELECT file, title, duration_ms WHERE status = 'failed' LIMIT 10"
+
+# Shorthand query omitting SELECT/FROM entirely (queries all columns FROM history_src)
 npx zr history query "WHERE status = 'failed' ORDER BY started_at DESC LIMIT 5"
 ```
 

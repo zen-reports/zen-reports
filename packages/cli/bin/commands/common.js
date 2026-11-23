@@ -2,7 +2,7 @@ import { existsSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'fs'
 import { dirname, relative, resolve } from 'path';
 import * as clack from '@clack/prompts';
 import pc from 'picocolors';
-import { exportToCsvString, generateExportFilename } from '@zen-reports/zen-core';
+import { exportToCsvString, formatDuration, generateExportFilename } from '@zen-reports/zen-core';
 
 export { getOsName, getPlaywrightVersion, getZenReporterVersion } from '../../dist/index.js';
 
@@ -37,33 +37,15 @@ export function checkDatabaseSizeWarning(historyDir, cwd = process.cwd()) {
 }
 
 /**
- * Formats a duration in milliseconds into a concise human-readable string (e.g. "45s", "2m 15s").
- *
- * @param {number|null|undefined} ms - Duration in milliseconds.
- * @returns {string} Formatted duration string or empty string if invalid.
- */
-export function formatDuration(ms) {
-  if (ms === null || ms === undefined || isNaN(ms)) return '';
-
-  const totalSeconds = Math.round(Number(ms) / 1000);
-
-  if (totalSeconds < 60) {
-    return `${totalSeconds}s`;
-  }
-
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  return `${minutes}m ${seconds}s`;
-}
-
-/**
  * Converts a snake_case or underscore-separated string into Proper Case / Title Case.
  *
  * @param {string} str - Input string.
  * @returns {string} Proper case string.
  */
 function toProperCase(str) {
+  if (str === 'count_star()' || str === 'count(*)') {
+    return 'Count';
+  }
   return str
     .split('_')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -91,12 +73,40 @@ function isNumericValue(val) {
 }
 
 /**
- * Formats a Date instance or ISO date string into `YYYY-MM-DD HH:mm:ss` format.
+ * Formats a Date instance or ISO date string into human-readable date and time format matching Zen UI standards.
  *
  * @param {Date|string|null|undefined} val - Date instance or ISO date string.
  * @returns {string} Formatted date string.
  */
 export function formatDate(val) {
+  if (val === null || val === undefined || val === '') return '';
+
+  const d = val instanceof Date ? val : new Date(val);
+
+  if (isNaN(d.getTime())) return String(val);
+
+  const dateStr = d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  const timeStr = d.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+
+  return `${dateStr} · ${timeStr}`;
+}
+
+/**
+ * Formats a Date instance or ISO date string into a sortable ISO string (YYYY-MM-DD HH:mm:ss) for CSV export.
+ *
+ * @param {Date|string|null|undefined} val - Date instance or ISO date string.
+ * @returns {string} Formatted ISO date string.
+ */
+export function formatIsoDate(val) {
   if (val === null || val === undefined || val === '') return '';
 
   const d = val instanceof Date ? val : new Date(val);
@@ -211,8 +221,13 @@ export function printTable(
   const termWidth =
     process.stdout.columns && process.stdout.columns > 20 ? process.stdout.columns : 0;
 
-  const wrapCell2Lines = (cellStr, width) => {
+  const wrapCell2Lines = (cellStr, width, colName = '') => {
     const s = String(cellStr).trim();
+
+    if (colName.endsWith('_at') && s.includes(' · ')) {
+      const [datePart, timePart] = s.split(' · ');
+      return [datePart, timePart];
+    }
 
     if (s.length <= width) {
       return [s, ''];
@@ -261,9 +276,17 @@ export function printTable(
 
   const naturalWidths = displayHeaders.map((_, colIdx) => {
     const [h1, h2] = header2Lines[colIdx];
+    const origCol = colIdx > 0 ? columns[colIdx - 1] : '';
     const maxValLen = Math.max(
       colIdx === 0 ? String(stringRows.length).length : 0,
-      ...stringRows.map((row) => row[colIdx].length)
+      ...stringRows.map((row) => {
+        const val = row[colIdx];
+        if (origCol.endsWith('_at') && val.includes(' · ')) {
+          const [dPart, tPart] = val.split(' · ');
+          return Math.max(dPart.length, tPart.length);
+        }
+        return val.length;
+      })
     );
 
     return Math.max(h1.length, h2.length, maxValLen);
@@ -336,6 +359,19 @@ export function printTable(
       return pc.dim(text);
     }
     const colName = colIdx > 0 ? (columns[colIdx - 1] || '').toLowerCase() : '';
+
+    if (colName === 'delta') {
+      const trimmed = text.trim();
+      if (trimmed.startsWith('+')) {
+        // In duration context (+ is slower / red), in pass rate (+ is higher / green)
+        return columns.includes('pass_rate') ? pc.green(text) : pc.red(text);
+      }
+      if (trimmed.startsWith('-') && trimmed.length > 1) {
+        // In duration context (- is faster / green), in pass rate (- is lower / red)
+        return columns.includes('pass_rate') ? pc.red(text) : pc.green(text);
+      }
+      return pc.dim(text);
+    }
 
     if (colName === 'status') {
       const lower = text.toLowerCase();
@@ -426,7 +462,10 @@ export function printTable(
 
       isFirst = false;
 
-      const wrappedCells = row.map((cell, i) => wrapCell2Lines(cell, widths[i]));
+      const wrappedCells = row.map((cell, i) => {
+        const origCol = i > 0 ? columns[i - 1] : '';
+        return wrapCell2Lines(cell, widths[i], origCol);
+      });
       const hasLine2 = wrappedCells.some((lines) => lines[1].length > 0);
 
       const line1Cells = wrappedCells.map((lines) => lines[0]);
@@ -468,6 +507,7 @@ export function printTable(
  * @param {boolean} [options.all=false] - If true, show all records without paging.
  * @param {number} [options.limit] - Explicit record limit requested by the user.
  * @param {boolean} [options.interactive=false] - Whether running in interactive menu mode.
+ * @param {boolean} [options.fromMenu=false] - Whether invoked from the parent interactive menu.
  * @returns {Promise<void>}
  */
 export async function printPaginatedTable(
@@ -481,31 +521,15 @@ export async function printPaginatedTable(
     return;
   }
 
-  const { pageSize = 25, all = false, limit, interactive = false } = options;
+  const { pageSize = 25, all = false, limit, interactive = false, fromMenu = false } = options;
 
-  if (all || (limit !== undefined && limit >= rows.length)) {
-    printTable({ columns, rows }, emptyMessage, entityName);
-    return;
-  }
-
-  if (limit !== undefined) {
-    const limitedRows = rows.slice(0, limit);
-    printTable({ columns, rows: limitedRows }, emptyMessage, entityName, {
-      totalCount: rows.length,
-    });
-    return;
-  }
-
-  // If total rows fit within a single page, print immediately
-  if (rows.length <= pageSize) {
-    printTable({ columns, rows }, emptyMessage, entityName);
-    return;
-  }
-
-  // In non-interactive/CI mode: print first page with footer note
+  // In non-interactive/CI mode: print and return
   if (!interactive && !(process.stdin.isTTY && process.stdout.isTTY)) {
-    const firstPage = rows.slice(0, pageSize);
-    printTable({ columns, rows: firstPage }, emptyMessage, entityName, {
+    const pageRows =
+      all || (limit !== undefined && limit >= rows.length)
+        ? rows
+        : rows.slice(0, limit || pageSize);
+    printTable({ columns, rows: pageRows }, emptyMessage, entityName, {
       totalCount: rows.length,
     });
     return;
@@ -515,7 +539,16 @@ export async function printPaginatedTable(
   let currentOffset = 0;
 
   while (currentOffset < rows.length) {
-    const currentRows = rows.slice(currentOffset, currentOffset + pageSize);
+    const isFirstBatch = currentOffset === 0;
+    const remainingBeforeBatch = rows.length - currentOffset;
+    const batchSize =
+      isFirstBatch && (all || (limit !== undefined && limit >= rows.length))
+        ? rows.length
+        : limit !== undefined
+          ? Math.min(limit, remainingBeforeBatch)
+          : Math.min(pageSize, remainingBeforeBatch);
+
+    const currentRows = rows.slice(currentOffset, currentOffset + batchSize);
     printTable({ columns, rows: currentRows }, emptyMessage, entityName, {
       offset: currentOffset,
       totalCount: rows.length,
@@ -524,14 +557,10 @@ export async function printPaginatedTable(
     currentOffset += currentRows.length;
     const remaining = rows.length - currentOffset;
 
-    if (remaining <= 0) {
-      break;
-    }
-
-    const nextBatchSize = Math.min(pageSize, remaining);
-    const action = await clack.select({
-      message: `Paging: ${remaining} more ${entityName} available. ${pc.dim('(Esc to finish & go back)')}`,
-      options: [
+    const optionsList = [];
+    if (remaining > 0) {
+      const nextBatchSize = Math.min(pageSize, remaining);
+      optionsList.push(
         {
           value: 'next',
           label: `Next ${nextBatchSize}`,
@@ -541,14 +570,29 @@ export async function printPaginatedTable(
           value: 'all',
           label: `Show All Remaining (${remaining})`,
           hint: `Display all ${rows.length} ${entityName} at once`,
-        },
-        {
-          value: 'export',
-          label: `Export All to CSV`,
-          hint: `Save complete dataset (${rows.length} ${entityName}) to CSV file`,
-        },
-        { value: 'done', label: `← Finish & Back`, hint: `Return to menu` },
-      ],
+        }
+      );
+    }
+
+    optionsList.push(
+      {
+        value: 'export',
+        label: `Export to CSV`,
+        hint: `Save dataset (${rows.length} ${entityName}) to CSV file`,
+      },
+      fromMenu
+        ? { value: 'done', label: `← Finish & Back`, hint: `Return to menu` }
+        : { value: 'done', label: `Done / Exit`, hint: `Return to terminal` }
+    );
+
+    const message =
+      remaining > 0
+        ? `Paging: ${remaining} more ${entityName} available. ${pc.dim(fromMenu ? '(Esc to finish & go back)' : '(Esc to exit)')}`
+        : `Actions for ${rows.length} ${entityName}: ${pc.dim(fromMenu ? '(Esc to finish & go back)' : '(Esc to exit)')}`;
+
+    const action = await clack.select({
+      message,
+      options: optionsList,
     });
 
     if (clack.isCancel(action) || action === 'done') {
@@ -618,7 +662,7 @@ export function exportTableToCsv(
           const val = item && c in item ? item[c] : null;
           if (val === null || val === undefined) return '';
           if (c.includes('ms')) return formatDuration(val);
-          if (c.endsWith('_at') || val instanceof Date) return formatDate(val);
+          if (c.endsWith('_at') || val instanceof Date) return formatIsoDate(val);
           return val;
         },
       };
@@ -792,11 +836,96 @@ export async function runQuery(conn, sql, params) {
 }
 
 export const SRC = 'history_src';
-export const RUNS_SQL = `SELECT DISTINCT run_name, started_at, run_duration_ms AS duration_ms, count(DISTINCT file) AS files, run_total AS tests, run_passed AS passed, coalesce(run_flaky, 0) AS flaky, run_failed AS failed, run_timed_out AS timed_out, run_skipped AS skipped, run_interrupted AS interrupted FROM ${SRC} GROUP BY run_name, started_at, run_duration_ms, run_total, run_passed, run_flaky, run_failed, run_timed_out, run_skipped, run_interrupted ORDER BY started_at DESC`;
+export const RUNS_SQL = `SELECT DISTINCT
+  run_name,
+  coalesce(git_branch, '') AS branch,
+  CASE
+    WHEN run_workers IS NOT NULL AND run_workers > 1 THEN 'Parallel (' || run_workers || ')'
+    ELSE 'Serial'
+  END AS mode,
+  started_at,
+  run_duration_ms AS duration_ms,
+  count(DISTINCT file) AS files,
+  run_total AS tests,
+  run_passed AS passed,
+  coalesce(run_flaky, 0) AS flaky,
+  run_failed AS failed,
+  run_skipped AS skipped,
+  run_timed_out AS timed_out,
+  run_interrupted AS interrupted,
+  CASE
+    WHEN run_total = 0 THEN '0%'
+    WHEN run_passed < run_total AND (100.0 * (run_passed + coalesce(run_flaky, 0)) / run_total) >= 99.5 THEN cast(floor(100.0 * (run_passed + coalesce(run_flaky, 0)) / run_total) as int) || '%'
+    WHEN (run_passed + coalesce(run_flaky, 0)) > 0 AND (100.0 * (run_passed + coalesce(run_flaky, 0)) / run_total) <= 0.5 THEN cast(ceil(100.0 * (run_passed + coalesce(run_flaky, 0)) / run_total) as int) || '%'
+    ELSE cast(round(100.0 * (run_passed + coalesce(run_flaky, 0)) / run_total) as int) || '%'
+  END AS pass_rate
+FROM ${SRC}
+GROUP BY
+  run_name,
+  git_branch,
+  run_workers,
+  started_at,
+  run_duration_ms,
+  run_total,
+  run_passed,
+  run_flaky,
+  run_failed,
+  run_skipped,
+  run_timed_out,
+  run_interrupted
+ORDER BY started_at DESC`;
 export const FLAKY_SQL = `SELECT suite, file, title, project, count(*) FILTER (status IN ('failed', 'timedOut')) AS failed_runs, count(*) FILTER (status = 'passed') AS passed_runs, sum(passed_on_retry) AS recovered_by_retry, count(*) AS total_runs, max(started_at) FILTER (status IN ('failed', 'timedOut') OR passed_on_retry > 0) AS last_flaky_at, max(started_at) AS last_seen_at FROM ${SRC} GROUP BY suite, file, title, project HAVING (failed_runs > 0 AND passed_runs > 0) OR sum(passed_on_retry) > 0 ORDER BY failed_runs DESC, passed_runs DESC`;
 export const REGRESSIONS_SQL = `WITH run_tests AS (SELECT run_id, run_name, suite, file, title, project, max(started_at) AS started_at, CASE WHEN count(*) FILTER (status = 'failed') > 0 THEN 'failed' WHEN count(*) FILTER (status = 'timedOut') > 0 THEN 'timedOut' WHEN count(*) FILTER (status = 'interrupted') > 0 THEN 'interrupted' WHEN count(*) FILTER (status = 'skipped') > 0 THEN 'skipped' ELSE 'passed' END AS status FROM ${SRC} GROUP BY run_id, run_name, suite, file, title, project), ordered AS (SELECT run_id, run_name, started_at, suite, file, title, project, status, row_number() OVER (PARTITION BY suite, file, title, project ORDER BY started_at, run_id) AS seq FROM run_tests), regressions AS (SELECT b.run_name AS regressed_in, b.started_at AS regressed_at, b.suite AS suite, b.file AS file, b.title AS title, b.project AS project FROM ordered b JOIN ordered a ON a.suite = b.suite AND a.file = b.file AND a.title = b.title AND a.project = b.project AND b.seq = a.seq + 1 WHERE a.status = 'passed' AND b.status IN ('failed', 'timedOut', 'interrupted')), latest AS (SELECT run_id, run_name, started_at, status, suite, file, title, project, row_number() OVER (PARTITION BY suite, file, title, project ORDER BY started_at DESC, run_id DESC) AS rn FROM run_tests) SELECT r.suite, r.file, r.title, r.project, r.regressed_in, r.regressed_at, l.status AS last_status, l.started_at AS last_run_at FROM (SELECT r.*, row_number() OVER (PARTITION BY suite, file, title, project ORDER BY regressed_at DESC) AS rn FROM regressions r) r JOIN latest l ON l.suite = r.suite AND l.file = r.file AND l.title = r.title AND l.project = r.project AND l.rn = 1 WHERE r.rn = 1 ORDER BY l.started_at DESC`;
 export const SLOW_SQL = `SELECT suite, file, title, project, round(avg(duration_ms), 1) AS avg_duration_ms, max(duration_ms) AS max_duration_ms, arg_max(duration_ms, started_at) AS last_duration_ms, max(started_at) AS last_run_at, arg_max(status, started_at) AS last_run_status, count(*) AS runs FROM ${SRC} GROUP BY suite, file, title, project ORDER BY avg(duration_ms) DESC LIMIT ?`;
-export const TREND_SQL = `SELECT run_name, started_at, run_total, run_passed, run_failed, round(100.0 * (run_passed + coalesce(run_flaky, 0)) / nullif(run_total, 0), 1) AS pass_rate FROM ${SRC} GROUP BY run_id, run_name, started_at, run_total, run_passed, run_flaky, run_failed ORDER BY started_at`;
+export const TREND_SQL = `WITH ordered AS (
+  SELECT
+    run_id,
+    run_name,
+    started_at,
+    run_total,
+    run_passed,
+    run_failed,
+    round(100.0 * (run_passed + coalesce(run_flaky, 0)) / nullif(run_total, 0), 1) AS pass_rate
+  FROM ${SRC}
+  GROUP BY run_id, run_name, started_at, run_total, run_passed, run_flaky, run_failed
+),
+with_diff AS (
+  SELECT
+    *,
+    round(pass_rate - lag(pass_rate) OVER (ORDER BY started_at ASC, run_id ASC), 1) AS diff
+  FROM ordered
+)
+SELECT
+  run_name,
+  started_at,
+  run_total AS total,
+  run_passed AS passed,
+  run_failed AS failed,
+  pass_rate,
+  CASE
+    WHEN diff > 0 THEN '+' || diff || '%'
+    WHEN diff < 0 THEN diff || '%'
+    ELSE '-'
+  END AS delta
+FROM with_diff
+ORDER BY started_at ASC, run_id ASC`;
+export const DURATION_TREND_SQL = `WITH grouped AS (
+  SELECT
+    run_id,
+    run_name,
+    started_at,
+    run_duration_ms AS duration_ms
+  FROM ${SRC}
+  GROUP BY run_id, run_name, started_at, run_duration_ms
+  ORDER BY started_at ASC, run_id ASC
+)
+SELECT
+  run_name,
+  started_at,
+  duration_ms,
+  duration_ms - lag(duration_ms) OVER (ORDER BY started_at ASC, run_id ASC) AS raw_delta
+FROM grouped
+ORDER BY started_at ASC, run_id ASC`;
 export const PROJECT_DURATIONS_SQL = `SELECT run_id, started_at, project, round(sum(duration_ms) / 1000.0, 2) AS duration_sec FROM ${SRC} WHERE project IS NOT NULL AND project != '' GROUP BY run_id, started_at, project ORDER BY started_at ASC`;
 export const FILES_SQL = `SELECT run_id, started_at, file, count(*) AS total, count(*) FILTER (status = 'passed' AND coalesce(passed_on_retry, 0) = 0) AS passed, count(*) FILTER (status = 'passed' AND coalesce(passed_on_retry, 0) > 0) AS flaky, count(*) FILTER (status = 'failed') AS failed, count(*) FILTER (status = 'timedOut') AS timed_out, count(*) FILTER (status = 'interrupted') AS interrupted, count(*) FILTER (status = 'skipped') AS skipped FROM ${SRC} WHERE file IS NOT NULL AND file != '' GROUP BY run_id, started_at, file ORDER BY started_at ASC, file ASC`;
 export const FILES_SUMMARY_SQL = `SELECT file, count(DISTINCT run_id) AS runs, count(*) AS total_tests, count(*) FILTER (status = 'passed' AND coalesce(passed_on_retry, 0) = 0) AS passed, count(*) FILTER (status = 'passed' AND coalesce(passed_on_retry, 0) > 0) AS flaky, count(*) FILTER (status = 'failed') AS failed, count(*) FILTER (status = 'timedOut') AS timed_out, count(*) FILTER (status = 'interrupted') AS interrupted, count(*) FILTER (status = 'skipped') AS skipped, round(100.0 * count(*) FILTER (status = 'passed') / nullif(count(*), 0), 1) AS pass_rate FROM ${SRC} WHERE file IS NOT NULL AND file != '' GROUP BY file ORDER BY total_tests DESC`;

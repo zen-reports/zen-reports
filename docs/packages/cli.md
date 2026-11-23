@@ -44,7 +44,8 @@ npx zr show
 npx zr history
 npx zr history flaky
 npx zr history slow
-npx zr history trend
+npx zr history trends
+npx zr history trends duration
 
 # Output Markdown summary snippet
 npx zr summary
