@@ -28,7 +28,7 @@ function collectFailedCases(suites, failedCases = []) {
 }
 
 /**
- * Generates a GitHub-flavored Markdown summary string from processed report data.
+ * Generates a GitHub-flavored Markdown summary string from processed report data, including run environment metadata and failed tests.
  *
  * @param {object} reportData - The JSON report data object.
  * @returns {string} Formatted Markdown summary text.
@@ -52,6 +52,36 @@ export function generateMarkdownSummaryFromReport(reportData) {
   const titleRun = testRun.testRunName || 'Test Run';
 
   let md = `\n### 📊 Test Run Summary: ${titleProject} — ${titleRun}\n\n`;
+
+  const envParts = [];
+  if (summary.osName) {
+    envParts.push(`**OS:** \`${summary.osName}\``);
+  }
+  if (summary.playwrightVersion) {
+    envParts.push(`**Playwright:** \`v${summary.playwrightVersion}\``);
+  }
+  if (typeof summary.workers === 'number' && summary.workers > 0) {
+    envParts.push(`**Workers:** \`${summary.workers}\``);
+  }
+  if (typeof summary.numberOfProjects === 'number' && summary.numberOfProjects > 0) {
+    envParts.push(`**Projects:** \`${summary.numberOfProjects}\``);
+  }
+  if (Array.isArray(testRun.suites) && testRun.suites.length > 0) {
+    envParts.push(`**Files:** \`${testRun.suites.length}\``);
+  }
+  if (summary.gitBranch || summary.gitCommit) {
+    if (summary.gitBranch && summary.gitCommit) {
+      envParts.push(`**Branch:** \`${summary.gitBranch}\` (\`${summary.gitCommit}\`)`);
+    } else if (summary.gitBranch) {
+      envParts.push(`**Branch:** \`${summary.gitBranch}\``);
+    } else {
+      envParts.push(`**Commit:** \`${summary.gitCommit}\``);
+    }
+  }
+
+  if (envParts.length > 0) {
+    md += `> ${envParts.join(' | ')}\n\n`;
+  }
 
   const headers = [
     'Status',

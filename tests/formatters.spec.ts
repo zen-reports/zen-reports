@@ -66,3 +66,64 @@ test.describe('Range Selection Parser Tests', () => {
     expect(parseRangeSelection('1-2-3', 10)).toEqual([]);
   });
 });
+
+test.describe('Markdown Summary Generator Tests', () => {
+  test('generates markdown summary with environment info strip', async () => {
+    const { generateMarkdownSummaryFromReport } =
+      await import('../packages/cli/bin/commands/summary.js');
+
+    const reportData = {
+      testRun: {
+        projectName: 'Acme Test Suite',
+        testRunName: 'Nightly CI',
+        summary: {
+          total: 10,
+          passed: 10,
+          failed: 0,
+          flaky: 0,
+          skipped: 0,
+          timedOut: 0,
+          interrupted: 0,
+          duration: 45000,
+          osName: 'Ubuntu Linux',
+          playwrightVersion: '1.50.0',
+          workers: 4,
+          numberOfProjects: 2,
+          gitBranch: 'feature/ci-summary',
+          gitCommit: 'abc1234',
+        },
+        suites: [{ title: 'suite1.spec.ts' }, { title: 'suite2.spec.ts' }],
+      },
+    };
+
+    const md = generateMarkdownSummaryFromReport(reportData);
+
+    expect(md).toContain('### 📊 Test Run Summary: Acme Test Suite — Nightly CI');
+    expect(md).toContain(
+      '> **OS:** `Ubuntu Linux` | **Playwright:** `v1.50.0` | **Workers:** `4` | **Projects:** `2` | **Files:** `2` | **Branch:** `feature/ci-summary` (`abc1234`)'
+    );
+    expect(md).toContain('| Status | Duration | Pass Rate | Total | Passed | Flaky | Failed |');
+  });
+
+  test('omits environment info strip gracefully when metadata is missing', async () => {
+    const { generateMarkdownSummaryFromReport } =
+      await import('../packages/cli/bin/commands/summary.js');
+
+    const reportData = {
+      testRun: {
+        summary: {
+          total: 5,
+          passed: 5,
+          failed: 0,
+          duration: 1200,
+        },
+      },
+    };
+
+    const md = generateMarkdownSummaryFromReport(reportData);
+    expect(md).toContain('### 📊 Test Run Summary: Test Automation Project — Test Run');
+    expect(md).not.toContain('> **OS:**');
+    expect(md).not.toContain('> **Playwright:**');
+    expect(md).not.toContain('>');
+  });
+});

@@ -52,12 +52,12 @@ When tests are executed with Zen Reporter configured in Playwright (`npx playwri
 
 ### Report & Environment
 
-| Command          | Description                                                                                                                 |
-| :--------------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| `npx zr show`    | Launch the local HTTP report server (127.0.0.1) and open `index.html` in your default browser.                              |
-| `npx zr summary` | Generate a concise Markdown summary snippet of the latest test run (ideal for CI PR comments or job steps).                 |
-| `npx zr env`     | Print diagnostic system information (Node.js, OS, `@playwright/test`, and `@zen-reports/zen-reporter-playwright` versions). |
-| `npx zr help`    | Print standard CLI help and subcommand descriptions.                                                                        |
+| Command          | Description                                                                                                                       |
+| :--------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `npx zr show`    | Launch the local HTTP report server (127.0.0.1) and open `index.html` in your default browser.                                    |
+| `npx zr summary` | Generate a concise Markdown summary snippet of the latest test run with environment info (ideal for CI PR comments or job steps). |
+| `npx zr env`     | Print diagnostic system information (Node.js, OS, `@playwright/test`, and `@zen-reports/zen-reporter-playwright` versions).       |
+| `npx zr help`    | Print standard CLI help and subcommand descriptions.                                                                              |
 
 ---
 
