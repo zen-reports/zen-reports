@@ -1,9 +1,10 @@
-import { STEP_CATEGORIES } from '@zen-reports/zen-core';
+import { formatDateParts, STEP_CATEGORIES } from '@zen-reports/zen-core';
 import { useState } from 'react';
 import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -11,50 +12,63 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { parseTrendDateParts, renderTrendTick } from '../TrendTick';
+import { renderTrendTick } from '../TrendTick';
 
 export interface StepCategoryChartPoint {
+  id?: string;
   name: string;
   started_at?: string;
   run_total?: number;
   hasStepData?: boolean;
+  git_branch?: string;
+  git_commit?: string;
+  git_commit_full?: string;
   [categoryLabel: string]: string | number | boolean | undefined;
 }
 
 export interface StepCategoryChartProps {
   chartData: StepCategoryChartPoint[];
   viewMode: 'percent' | 'count';
+  hoveredRunId?: string | null;
+  onHoverRun?: (runId: string | null) => void;
 }
 
+const CATEGORY_LABEL_ORDER = new Map(STEP_CATEGORIES.map((c, i) => [c.label, i]));
+
+/**
+ * Renders the tooltip content for the step category distribution chart.
+ *
+ * @param props - Tooltip properties provided by Recharts.
+ * @param viewMode - Currently active view mode ('percent' or 'count').
+ * @returns Formatted tooltip JSX element or null if inactive.
+ */
 const renderCategoryTooltip = (props: TooltipContentProps, viewMode: 'percent' | 'count') => {
   const { active, payload, label } = props;
   if (!active || !payload || payload.length === 0) return null;
 
   const dataItem = payload[0]?.payload as StepCategoryChartPoint | undefined;
   const hasStepData = dataItem?.hasStepData !== false;
+  const runName = dataItem?.name;
 
-  const valStr = String(label);
-  const dateParts = parseTrendDateParts(valStr);
-  let dateLine = valStr;
-  let timeLine = '';
-
-  if (dateParts) {
-    dateLine = dateParts[0] || valStr;
-    timeLine = dateParts[1] || '';
-  }
+  const [dateLine, timeLine] = formatDateParts(String(label));
 
   const sortedPayload = [...payload].sort((a, b) => {
-    const idxA = STEP_CATEGORIES.findIndex((c) => c.label === a.name);
-    const idxB = STEP_CATEGORIES.findIndex((c) => c.label === b.name);
-    return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+    const idxA = CATEGORY_LABEL_ORDER.get(String(a.name)) ?? 99;
+    const idxB = CATEGORY_LABEL_ORDER.get(String(b.name)) ?? 99;
+    return idxA - idxB;
   });
 
   return (
     <div className="p-2.5 text-text-ink dark:text-text-on-primary">
-      <div className="font-bold text-xs">{dateLine}</div>
-      {timeLine && (
-        <div className="text-[11px] text-text-body-mid dark:text-text-muted mb-1.5">{timeLine}</div>
-      )}
+      {runName && <div className="font-bold text-xs">{runName}</div>}
+      <div
+        className={`text-[11px] text-text-body-mid dark:text-text-muted mb-1.5 ${
+          runName ? 'mt-0.5' : 'font-bold text-xs'
+        }`}
+      >
+        {dateLine}
+        {timeLine ? ` · ${timeLine}` : ''}
+      </div>
       {!hasStepData ? (
         <div className="text-xs italic text-text-body-mid dark:text-text-muted py-1">
           No step category data recorded for this run
@@ -87,9 +101,26 @@ const renderCategoryTooltip = (props: TooltipContentProps, viewMode: 'percent' |
   );
 };
 
-export function StepCategoryChart({ chartData, viewMode }: StepCategoryChartProps) {
+/**
+ * Renders the stacked bar chart for step category breakdown across historical runs.
+ *
+ * @param props - Component properties containing chart data, active view mode, hovered run id, and hover callbacks.
+ * @returns Stacked bar chart visualization.
+ */
+export function StepCategoryChart({
+  chartData,
+  viewMode,
+  hoveredRunId,
+  onHoverRun,
+}: StepCategoryChartProps) {
   const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(() => new Set());
 
+  /**
+   * Toggles category visibility in the chart legend when clicked.
+   *
+   * @param dataKey - The category label key to toggle.
+   * @returns {void}
+   */
   const handleLegendClick = (dataKey: string) => {
     setHiddenCategories((prev) => {
       const next = new Set(prev);
@@ -108,14 +139,26 @@ export function StepCategoryChart({ chartData, viewMode }: StepCategoryChartProp
   return (
     <div className="h-72 w-full pt-2">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+        <BarChart
+          data={chartData}
+          margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
+          onMouseMove={(state) => {
+            if (state.isTooltipActive && state.activeIndex != null) {
+              const idx = Number(state.activeIndex);
+              if (Number.isInteger(idx) && chartData[idx]) {
+                onHoverRun?.(chartData[idx].id ?? null);
+              }
+            }
+          }}
+          onMouseLeave={() => onHoverRun?.(null)}
+        >
           <CartesianGrid
             strokeDasharray="3 3"
             vertical={false}
             stroke="var(--color-border-chart, #e5e7eb)"
           />
           <XAxis
-            dataKey="name"
+            dataKey="started_at"
             tick={renderTrendTick}
             axisLine={{ stroke: 'var(--color-border-chart, #e5e7eb)' }}
             tickLine={false}
@@ -186,7 +229,21 @@ export function StepCategoryChart({ chartData, viewMode }: StepCategoryChartProp
               stroke={cat.borderColor}
               strokeWidth={0.5}
               hide={hiddenCategories.has(cat.label)}
-            />
+            >
+              {chartData.map((entry) => {
+                const isHovered = hoveredRunId != null && entry.id === hoveredRunId;
+                const opacity = hoveredRunId == null || isHovered ? 1 : 0.45;
+                return (
+                  <Cell
+                    key={`cell-${entry.id || entry.name}-${cat.key}`}
+                    fill={cat.color}
+                    fillOpacity={opacity}
+                    stroke={isHovered ? 'var(--color-accent-blue)' : cat.borderColor}
+                    strokeWidth={isHovered ? 1.5 : 0.5}
+                  />
+                );
+              })}
+            </Bar>
           ))}
         </BarChart>
       </ResponsiveContainer>

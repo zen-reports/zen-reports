@@ -10,6 +10,12 @@ interface TrendsGuidesProps {
   onCloseStepCategoryModal: () => void;
 }
 
+/**
+ * Contextual help and guide modals for Trends tab charts (Pass Rate, Duration, and Step Category).
+ *
+ * @param props - Component properties containing open/close state handlers for each trend guide modal.
+ * @returns Three guide modals for the Trends tab.
+ */
 export default function TrendsGuides({
   passRateModalOpen,
   onClosePassRateModal,
@@ -43,6 +49,46 @@ export default function TrendsGuides({
               The pass rate counts flaky tests — those that initially failed but passed on automatic
               retry — as passing: (Passed + Flaky) / Total.
             </p>
+          </div>
+
+          {/* Interactive Chart Features & Data Table */}
+          <div className="space-y-2 border-t border-border-default pt-4">
+            <h4 className="font-bold text-sm text-text-ink dark:text-text-on-primary mb-1">
+              Interactive Features & Historical Data Table
+            </h4>
+            <div className="space-y-2 text-xs text-text-body-mid dark:text-text-muted">
+              <p>
+                <strong>Interactive Hover &amp; Tooltips:</strong> Hovering over chart data points
+                reveals the test run name, timestamp, and precise pass rate percentage alongside the
+                breakdown of passed, flaky, failed, and other outcome counts. The corresponding row
+                in the data table below is automatically highlighted.
+              </p>
+              <p>
+                <strong>Expandable Data Table:</strong> An expandable <em>View Trend Data</em> table
+                provides a comprehensive breakdown for every run:
+              </p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>
+                  <strong>Run Name:</strong> Custom or generated run identifier.
+                </li>
+                <li>
+                  <strong>Branch &amp; Commit:</strong> Git branch name (with truncation tooltip)
+                  and short commit SHA for exact code revision traceability.
+                </li>
+                <li>
+                  <strong>Date &amp; Time:</strong> Run start timestamp.
+                </li>
+                <li>
+                  <strong>Status Breakdown:</strong> Separate columns for Passed, Flaky, Failed,
+                  Skipped, Timed Out, and Interrupted test counts, culminating in the overall Pass
+                  Rate badge.
+                </li>
+                <li>
+                  <strong>CSV Export:</strong> Click <em>Export to CSV</em> to download the tabular
+                  trend dataset for custom offline reporting and spreadsheet analysis.
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Target Thresholds */}
@@ -125,7 +171,7 @@ export default function TrendsGuides({
         isOpen={durationModalOpen}
         onClose={onCloseDurationModal}
         title="Project Duration Trend Guide"
-        subtitle="Historical run duration trends and sequential effort diagnostics across projects"
+        subtitle="Historical sequential effort duration trends and diagnostics across projects"
       >
         <div className="space-y-4 text-xs text-text-body-mid dark:text-text-muted leading-relaxed">
           {/* Overview */}
@@ -134,9 +180,9 @@ export default function TrendsGuides({
               Overview & Diagnostic Utility
             </h4>
             <p>
-              The <strong>Project Duration Trend</strong> chart plots execution run times (in
+              The <strong>Project Duration Trend</strong> chart plots sequential effort duration (in
               seconds) across the 15 most recent test runs for each project, helping engineering
-              teams spot performance drift, suite bloat, and execution bottlenecks over time.
+              teams spot performance drift, suite bloat, and compute bottlenecks over time.
             </p>
           </div>
 
@@ -152,10 +198,43 @@ export default function TrendsGuides({
             </p>
             <p className="text-[11px] text-text-body-mid/90 dark:text-text-muted/90 leading-relaxed">
               <strong>Why this matters:</strong> In parallelized test runs, the cumulative
-              sequential effort of a busy project can be significantly higher than the actual
-              wall-clock execution time. To analyze concurrency gains and worker efficiency, check
-              the <em>Execution Efficiency</em> metrics on the dashboard.
+              sequential effort of a project is typically higher than the actual wall-clock
+              execution time. To analyze concurrency gains and worker efficiency, check the{' '}
+              <em>Execution Efficiency</em> metrics on the dashboard.
             </p>
+          </div>
+
+          {/* Interactive Chart Features & Data Table */}
+          <div className="space-y-2 border-t border-border-default pt-4">
+            <h4 className="font-bold text-sm text-text-ink dark:text-text-on-primary mb-1">
+              Interactive Features & Historical Data Table
+            </h4>
+            <div className="space-y-2 text-xs text-text-body-mid dark:text-text-muted">
+              <p>
+                <strong>Hover Inspection:</strong> Hovering over chart data points or lines
+                highlights that project's duration across runs and displays a tooltip with the test
+                run name, start timestamp, and formatted duration per project. Hovering
+                synchronously highlights the corresponding run in the table below.
+              </p>
+              <p>
+                <strong>Expandable Data Table:</strong> Expand <em>View Trend Data</em> to inspect
+                exact duration values across projects:
+              </p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>
+                  <strong>Run Context:</strong> Displays Run Name, Git Branch (with full branch
+                  tooltip if truncated), and 7-character Git Commit hash.
+                </li>
+                <li>
+                  <strong>Project Breakdown:</strong> Color-coded column per project matching the
+                  chart palette, displaying formatted sequential effort durations.
+                </li>
+                <li>
+                  <strong>CSV Export:</strong> Download all historical duration metrics to CSV via
+                  the <em>Export to CSV</em> button.
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Diagnostic Action Items */}
@@ -216,9 +295,8 @@ export default function TrendsGuides({
                 excluded from these totals.
               </li>
               <li>
-                The trend covers the 15 most recent runs, with the newest plotted as "Current Run";
-                the summary cards above the chart show the current run's per-category breakdown
-                (Waits above 15% is highlighted).
+                The trend covers the 15 most recent runs; the summary cards above the chart show the
+                current run's per-category breakdown (Waits above 15% is highlighted).
               </li>
             </ul>
           </div>
@@ -276,10 +354,45 @@ export default function TrendsGuides({
                 </p>
               </div>
             </div>
-            <p className="mt-2 text-[11px] text-text-body-mid dark:text-text-muted">
-              The legend below the chart is interactive: click a category to hide or show its bars
-              (at least one category must remain visible).
-            </p>
+          </div>
+
+          {/* Interactive Chart Features & Data Table */}
+          <div className="space-y-2 border-t border-border-default pt-4">
+            <h4 className="font-bold text-sm text-text-ink dark:text-text-on-primary mb-1">
+              Interactive Features & Historical Data Table
+            </h4>
+            <div className="space-y-2 text-xs text-text-body-mid dark:text-text-muted">
+              <p>
+                <strong>Interactive Hover &amp; Tooltip:</strong> Hovering over any stacked bar
+                section displays a tooltip showing the test run name, timestamp, and a breakdown of
+                executed steps alongside their relative percentage share. Hovering synchronously
+                highlights that run in the data table below.
+              </p>
+              <p>
+                <strong>Interactive Legend:</strong> Click any category in the chart legend below to
+                hide or show its bars (at least one category must remain visible).
+              </p>
+              <p>
+                <strong>Expandable Data Table:</strong> Expand <em>View Trend Data</em> to view full
+                per-run details:
+              </p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>
+                  <strong>Run Context:</strong> Displays Run Name, Git Branch (with truncation
+                  tooltip), and 7-character Git Commit hash.
+                </li>
+                <li>
+                  <strong>Dynamic Category Columns:</strong> In <em>% Normalized</em> mode, columns
+                  display percentage shares with counts in parentheses. In <em>Step Count</em> mode,
+                  columns show raw counts with percentages in parentheses.
+                </li>
+                <li>
+                  <strong>Total Steps &amp; Export:</strong> Includes a right-aligned Total Steps
+                  column and an <em>Export to CSV</em> button for exporting all categorized step
+                  data.
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Why & How This Trend Chart Is Useful */}

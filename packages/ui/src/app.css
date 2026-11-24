@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source '../../core/src';
 
 /* ==========================================================================
    DEFAULT THEME: SAGE
@@ -93,8 +94,8 @@
   --color-status-chart-passed: var(--color-success-500);
   --color-status-chart-flaky: var(--color-warning-500);
   --color-status-chart-failed: var(--color-danger-500);
-  --color-status-chart-timed-out: var(--color-danger-600);
-  --color-status-chart-interrupted: #d97706; /* amber-600 */
+  --color-status-chart-timed-out: #881337; /* Distinct deep wine/berry (rose-900) */
+  --color-status-chart-interrupted: #ea580c; /* Distinct orange-600 */
   --color-status-chart-skipped: #94a3b8; /* slate-400 */
 
   /* ── Step Category Composition Palette (Sage / Default Light) ─ */
@@ -134,8 +135,8 @@ html.dark {
   --color-status-chart-passed: var(--color-success-500);
   --color-status-chart-flaky: var(--color-warning-500);
   --color-status-chart-failed: var(--color-danger-500);
-  --color-status-chart-timed-out: var(--color-danger-400, #f87171);
-  --color-status-chart-interrupted: #f59e0b; /* amber-500 */
+  --color-status-chart-timed-out: #fda4af; /* Distinct soft berry/rose-300 */
+  --color-status-chart-interrupted: #f97316; /* Distinct orange-500 */
   --color-status-chart-skipped: #64748b; /* slate-500 */
 
   /* ── Step Category Composition Palette (Sage Dark) ─ */
@@ -630,6 +631,9 @@ html[data-theme='oasis'].dark,
   --color-accent-yellow: #f5a623;
   --color-accent-red: #ff4d88;
 
+  /* ── Status Chart Palette (Oasis Dark) ───────── */
+  --color-status-chart-interrupted: #ea580c; /* Distinct deep orange to differentiate from flaky (#f5a623) */
+
   /* ── Step Category Composition Palette (Oasis Dark) ─ */
   --color-step-cat-assertions: #36b37e;
   --color-step-cat-assertions-border: #00875a;
@@ -699,16 +703,22 @@ kbd {
 }
 
 /* Recharts Hover Cursor (Bar/Line Chart Hover Highlight) */
-.recharts-rectangle.recharts-tooltip-cursor,
-.recharts-tooltip-cursor {
+.recharts-rectangle.recharts-tooltip-cursor {
   fill: rgba(0, 0, 0, 0.05) !important;
   stroke: transparent !important;
 }
 
-.dark .recharts-rectangle.recharts-tooltip-cursor,
-.dark .recharts-tooltip-cursor {
+.dark .recharts-rectangle.recharts-tooltip-cursor {
   fill: rgba(255, 255, 255, 0.06) !important;
   stroke: transparent !important;
+}
+
+path.recharts-tooltip-cursor,
+line.recharts-tooltip-cursor {
+  stroke: var(--color-accent-blue) !important;
+  stroke-width: 2px !important;
+  stroke-dasharray: 4 4 !important;
+  fill: none !important;
 }
 
 /* Custom range slider track & thumb styling for cross-browser theme support */

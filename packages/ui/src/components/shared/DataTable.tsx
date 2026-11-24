@@ -92,6 +92,8 @@ interface DataTableProps<T> {
   columns: ColumnDef<T>[];
   getRowKey: (item: T, index: number) => string;
   getRowClassName?: (item: T, index: number) => string;
+  onRowMouseEnter?: (item: T, index: number) => void;
+  onRowMouseLeave?: (item: T, index: number) => void;
   emptyMessage?: React.ReactNode;
   className?: string;
   compact?: boolean;
@@ -105,6 +107,8 @@ export function DataTable<T>({
   columns,
   getRowKey,
   getRowClassName,
+  onRowMouseEnter,
+  onRowMouseLeave,
   emptyMessage,
   className = '',
   compact = false,
@@ -162,6 +166,8 @@ export function DataTable<T>({
               return (
                 <tr
                   key={getRowKey(item, index)}
+                  onMouseEnter={() => onRowMouseEnter?.(item, index)}
+                  onMouseLeave={() => onRowMouseLeave?.(item, index)}
                   className={`border-b border-border-default hover:bg-surface-100/60 dark:hover:bg-surface-200/40 transition-colors ${rowCustomClass}`}
                 >
                   {columns.map((col) => {

@@ -95,14 +95,13 @@ src/components/
 │   └── TestSuiteNode.tsx
 ├── trends/                # Quality & duration trends tab
 │   ├── TrendsSection.tsx
-│   ├── PassRateTrend.tsx
-│   ├── DurationTrend.tsx
-│   ├── StepCategoryTrend.tsx
+│   ├── PassRateTrend.tsx               # Pass rate trend chart & historical data table
+│   ├── DurationTrend.tsx               # Sequential effort duration chart & data table
+│   ├── StepCategoryTrend.tsx           # Step category composition & data table
 │   ├── TrendTick.tsx                   # SVG trend tick renderer & timestamp parser
-│   ├── TrendsGuides.tsx
+│   ├── TrendsGuides.tsx                # Contextual modal guides for all 3 trend charts
 │   └── step-category/
-│       ├── StepCategoryChart.tsx       # Recharts stacked bar chart
-│       └── StepCategorySummaryCards.tsx # Ratio KPI summary cards
+│       └── StepCategoryChart.tsx       # Recharts stacked bar chart (normalized & count views)
 ├── visual-regression/     # Visual regression diff viewer
 │   ├── VisualDiffViewer.tsx            # Main diff modal / container
 │   ├── SideBySideViewer.tsx

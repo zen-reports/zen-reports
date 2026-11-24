@@ -7,14 +7,12 @@ import { formatDateParts } from '@zen-reports/zen-core';
  * @returns Tuple of [dateString, timeString] or null if not a parseable timestamp.
  */
 export function parseTrendDateParts(valStr: string): [string, string] | null {
-  if (!valStr || valStr === 'Current Run' || valStr.startsWith('Run')) {
+  if (!valStr || !/^\d{4}-\d{2}-\d{2}/.test(valStr)) {
     return null;
   }
-  if (valStr.includes('T') || (valStr.includes('-') && /\d/.test(valStr))) {
-    const timestamp = Date.parse(valStr);
-    if (!isNaN(timestamp)) {
-      return formatDateParts(valStr);
-    }
+  const timestamp = Date.parse(valStr);
+  if (!isNaN(timestamp)) {
+    return formatDateParts(valStr);
   }
   return null;
 }
@@ -48,18 +46,21 @@ export const renderTrendTick = ({
   if (dateParts) {
     dateLine = dateParts[0] || valStr;
     timeLine = dateParts[1] || '';
-  } else if (valStr.includes(' ')) {
-    const spaceIdx = valStr.indexOf(' ');
-    dateLine = valStr.substring(0, spaceIdx);
-    timeLine = valStr.substring(spaceIdx + 1);
+  } else if (valStr.includes(' · ')) {
+    const parts = valStr.split(' · ');
+    dateLine = parts[0] || valStr;
+    timeLine = parts[1] || '';
   } else {
-    const fallbackParts = formatDateParts(valStr);
-    dateLine = fallbackParts[0] || valStr;
-    timeLine = fallbackParts[1] || '';
+    dateLine = valStr;
+    timeLine = '';
   }
+
+  const isTruncated = dateLine.length > 14;
+  const displayDateLine = isTruncated ? `${dateLine.slice(0, 13)}…` : dateLine;
 
   return (
     <g>
+      {isTruncated && <title>{valStr}</title>}
       <text
         x={tickX}
         y={tickY + 10}
@@ -68,7 +69,7 @@ export const renderTrendTick = ({
         fontWeight={500}
         fill="var(--color-text-ink)"
       >
-        {dateLine}
+        {displayDateLine}
       </text>
       {timeLine ? (
         <text

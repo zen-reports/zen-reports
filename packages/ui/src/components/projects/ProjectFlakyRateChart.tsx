@@ -45,7 +45,7 @@ const renderTooltip = (props: TooltipContentProps) => {
           <span className="flex items-center gap-1.5 text-warning-600 dark:text-warning-500">
             <span
               className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: 'var(--color-warning-500)' }}
+              style={{ backgroundColor: 'var(--color-status-chart-flaky)' }}
             />
             Flaky Test Cases:
           </span>
@@ -192,7 +192,11 @@ export default function ProjectFlakyRateChart({
                 fontSize: '12px',
               }}
             />
-            <Bar dataKey="Flaky Tests" fill="var(--color-warning-500)" radius={[0, 4, 4, 0]} />
+            <Bar
+              dataKey="Flaky Tests"
+              fill="var(--color-status-chart-flaky)"
+              radius={[0, 4, 4, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       )}

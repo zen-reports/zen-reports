@@ -14,7 +14,7 @@ interface ResultBreakdownItem {
   subTitle?: string;
   value: number;
   pct: number;
-  color: string;
+  barColor: string;
   text: string;
   bg: string;
   icon: ReactNode;
@@ -37,7 +37,7 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       subTitle: 'First Run',
       value: summary.passed,
       pct: statusPercents.passed,
-      color: 'bg-success-500',
+      barColor: 'var(--color-status-chart-passed)',
       text: 'text-success-600 dark:text-success-500',
       bg: 'bg-success-500/5 dark:bg-success-500/10 border-success-500/20',
       icon: (
@@ -57,7 +57,7 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       subTitle: 'Recovered',
       value: summary.flaky ?? 0,
       pct: statusPercents.flaky,
-      color: 'bg-warning-500',
+      barColor: 'var(--color-status-chart-flaky)',
       text: 'text-warning-600 dark:text-warning-500',
       bg: 'bg-warning-500/5 dark:bg-warning-500/10 border-warning-500/20',
       icon: (
@@ -80,7 +80,7 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       label: 'Failed',
       value: summary.failed,
       pct: statusPercents.failed,
-      color: 'bg-danger-500',
+      barColor: 'var(--color-status-chart-failed)',
       text: 'text-danger-600 dark:text-danger-500',
       bg: 'bg-danger-500/5 dark:bg-danger-500/10 border-danger-500/20',
       icon: (
@@ -99,9 +99,9 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       label: 'Timed Out',
       value: summary.timedOut,
       pct: statusPercents.timedOut,
-      color: 'bg-danger-600 dark:bg-danger-400',
-      text: 'text-danger-700 dark:text-danger-400',
-      bg: 'bg-danger-600/5 dark:bg-danger-400/10 border-danger-600/25 dark:border-danger-400/25',
+      barColor: 'var(--color-status-chart-timed-out)',
+      text: 'text-rose-900 dark:text-rose-300',
+      bg: 'bg-rose-500/5 dark:bg-rose-500/10 border-rose-900/20 dark:border-rose-300/25',
       icon: (
         <svg
           className="h-4 w-4"
@@ -122,9 +122,9 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       label: 'Interrupted',
       value: summary.interrupted ?? 0,
       pct: statusPercents.interrupted,
-      color: 'bg-amber-600 dark:bg-amber-500',
-      text: 'text-amber-600 dark:text-amber-500',
-      bg: 'bg-amber-500/5 dark:bg-amber-500/10 border-amber-500/20',
+      barColor: 'var(--color-status-chart-interrupted)',
+      text: 'text-orange-600 dark:text-orange-500',
+      bg: 'bg-orange-500/5 dark:bg-orange-500/10 border-orange-500/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -145,7 +145,7 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       label: 'Skipped',
       value: summary.skipped,
       pct: statusPercents.skipped,
-      color: 'bg-slate-400 dark:bg-slate-500',
+      barColor: 'var(--color-status-chart-skipped)',
       text: 'text-slate-600 dark:text-slate-400',
       bg: 'bg-slate-500/5 dark:bg-slate-400/10 border-slate-500/20 dark:border-slate-400/20',
       icon: (
@@ -289,8 +289,11 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
                 item.pct > 0 ? (
                   <div
                     key={item.label}
-                    className={`h-full ${item.color} transition-all duration-300`}
-                    style={{ width: `${item.pct}%` }}
+                    className="h-full transition-all duration-300"
+                    style={{
+                      width: `${item.pct}%`,
+                      backgroundColor: item.barColor,
+                    }}
                     title={`${item.label}: ${item.value} (${item.pct}%)`}
                   />
                 ) : null
