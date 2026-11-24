@@ -279,14 +279,14 @@ export default function ProjectDetailCards({ projectStats, onOpenGuide }: Projec
                 ? 'text-success-600 dark:text-success-500 bg-success-50 dark:bg-success-500/20'
                 : project.passRate >= 75
                   ? 'text-warning-600 dark:text-warning-500 bg-warning-50 dark:bg-warning-500/20'
-                  : 'text-danger-600 dark:text-danger-500 bg-danger-50 dark:bg-danger-500/20';
+                  : 'text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-500/20';
 
             const progressBarColor =
               project.passRate >= 90
                 ? 'bg-success-500'
                 : project.passRate >= 75
                   ? 'bg-warning-500'
-                  : 'bg-danger-500';
+                  : 'bg-red-500';
 
             return (
               <div
@@ -388,18 +388,18 @@ export default function ProjectDetailCards({ projectStats, onOpenGuide }: Projec
                           ) : (
                             <>
                               {project.failed > 0 && (
-                                <span className="text-danger-600 dark:text-danger-500 font-bold">
+                                <span className="text-red-700 dark:text-red-400 font-bold">
                                   {project.failed} Failed
                                 </span>
                               )}
                               {project.timedOut > 0 && (
-                                <span className="text-warning-600 dark:text-warning-500 font-bold">
+                                <span className="text-rose-800 dark:text-rose-300 font-bold">
                                   {project.failed > 0 ? '• ' : ''}
                                   {project.timedOut} Timed Out
                                 </span>
                               )}
                               {project.interrupted > 0 && (
-                                <span className="text-amber-600 dark:text-amber-500 font-bold">
+                                <span className="text-orange-800 dark:text-orange-300 font-bold">
                                   {project.failed > 0 || project.timedOut > 0 ? '• ' : ''}
                                   {project.interrupted} Interrupted
                                 </span>

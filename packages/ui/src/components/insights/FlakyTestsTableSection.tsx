@@ -138,9 +138,7 @@ export default function FlakyTestsTableSection({
         header: 'Failed Runs',
         align: 'right',
         cell: (row) => (
-          <span
-            className={row.failed_runs > 0 ? 'text-danger-600 dark:text-danger-500 font-bold' : ''}
-          >
+          <span className={row.failed_runs > 0 ? 'text-red-700 dark:text-red-400 font-bold' : ''}>
             {row.failed_runs}
           </span>
         ),

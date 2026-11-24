@@ -462,7 +462,7 @@ export default function FailureList({
                     {fileName}
                   </span>
                 </div>
-                <span className="shrink-0 ml-3 rounded-full bg-danger-50 dark:bg-danger-500/20 ring-1 ring-danger-500/20 px-3 py-1 text-xs font-semibold text-danger-600 dark:text-danger-500">
+                <span className="shrink-0 ml-3 rounded-full bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40 px-3 py-1 text-xs font-semibold">
                   {tests.length} failed
                 </span>
               </button>
@@ -516,7 +516,7 @@ export default function FailureList({
                   </svg>
                   <div className="space-y-1.5 min-w-0">
                     {/* 1st Line: Error Message Text */}
-                    <p className="text-xs text-danger-700 dark:text-danger-400 font-medium line-clamp-2 break-all">
+                    <p className="text-xs text-red-700 dark:text-red-400 font-medium line-clamp-2 break-all">
                       {cluster.representativeMessage}
                     </p>
 
@@ -537,7 +537,7 @@ export default function FailureList({
                   </div>
                 </div>
 
-                <span className="shrink-0 rounded-full bg-danger-50 dark:bg-danger-500/20 ring-1 ring-danger-500/20 px-3 py-1 text-xs font-semibold text-danger-600 dark:text-danger-500">
+                <span className="shrink-0 rounded-full bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40 px-3 py-1 text-xs font-semibold">
                   {cluster.tests.length} failed
                 </span>
               </button>

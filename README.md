@@ -4,7 +4,7 @@
 
 Beautiful test execution reports for Playwright.
 
-[🚀 Live Demo](https://docs.zenreports.dev/demo) | [📚 Documentation](https://docs.zenreports.dev) | [🐛 Report an Issue](https://github.com/zen-reports/zen-reports/issues)
+[🚀 Live Demo](https://zenreports.dev/demo) | [📚 Documentation](https://zenreports.dev/docs) | [🐛 Report an Issue](https://github.com/zen-reports/zen-reports/issues)
 
 > **Pre-Release Notice**: These packages are currently under active development and have **not been published to npm yet**. Direct installation and consumption in external projects is not possible at this time. Please do not attempt to install or consume `@zen-reports/*` packages prematurely until an official initial release is announced.
 >

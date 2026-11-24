@@ -52,15 +52,15 @@ export default function ProjectsGuides({ activeModal, onClose }: ProjectsGuidesP
               passes.
             </li>
             <li>
-              <strong className="text-danger-600 dark:text-danger-500">Failed:</strong> Hard
-              assertion failures or unhandled runtime exceptions.
+              <strong className="text-red-700 dark:text-red-400">Failed:</strong> Hard assertion
+              failures or unhandled runtime exceptions.
             </li>
             <li>
-              <strong className="text-danger-700 dark:text-danger-400">Timed Out:</strong> Tests
+              <strong className="text-rose-800 dark:text-rose-300">Timed Out:</strong> Tests
               exceeding the configured Playwright project timeout limit.
             </li>
             <li>
-              <strong className="text-amber-600 dark:text-amber-500">Interrupted:</strong> Tests
+              <strong className="text-orange-800 dark:text-orange-300">Interrupted:</strong> Tests
               cancelled due to worker signals or parent run aborts.
             </li>
             <li>
@@ -113,7 +113,7 @@ export default function ProjectsGuides({ activeModal, onClose }: ProjectsGuidesP
               conditional tags.
             </li>
             <li>
-              <strong className="text-emerald-600 dark:text-emerald-400">
+              <strong className="text-warning-600 dark:text-warning-500">
                 Coverage Density (%):
               </strong>{' '}
               The ratio of executed tests over total tests (
@@ -352,7 +352,7 @@ export default function ProjectsGuides({ activeModal, onClose }: ProjectsGuidesP
                   <strong className="text-text-ink dark:text-text-on-primary">
                     Row 2 (Unresolved Failures):
                   </strong>{' '}
-                  <span className="text-danger-600 dark:text-danger-500 font-semibold">Fail</span>{' '}
+                  <span className="text-red-600 dark:text-red-400 font-semibold">Fail</span>{' '}
                   (assertion or runtime errors),{' '}
                   <span className="text-warning-600 dark:text-warning-500 font-semibold">
                     Timeout

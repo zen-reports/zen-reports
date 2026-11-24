@@ -24,9 +24,9 @@ const statusConfig = {
   },
   failed: {
     bg: 'bg-surface-50 dark:bg-surface-50',
-    text: 'text-danger-600 dark:text-danger-500',
-    dot: 'bg-danger-50 text-danger-600 dark:bg-danger-500/20 dark:text-danger-400 dark:ring-1 dark:ring-danger-500/30',
-    ring: 'ring-danger-100 dark:ring-danger-500/20',
+    text: 'text-red-700 dark:text-red-400',
+    dot: 'bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40',
+    ring: 'ring-red-100 dark:ring-red-500/20',
   },
   skipped: {
     bg: 'bg-surface-50 dark:bg-surface-50',
@@ -36,15 +36,15 @@ const statusConfig = {
   },
   timedOut: {
     bg: 'bg-surface-50 dark:bg-surface-50',
-    text: 'text-warning-600 dark:text-warning-500',
-    dot: 'bg-warning-50 text-warning-600 dark:bg-warning-500/20 dark:text-warning-400 dark:ring-1 dark:ring-warning-500/30',
-    ring: 'ring-warning-100 dark:ring-warning-500/20',
+    text: 'text-rose-800 dark:text-rose-300',
+    dot: 'bg-rose-50 text-rose-800 ring-1 ring-rose-900/20 dark:bg-rose-500/20 dark:text-rose-300 dark:ring-1 dark:ring-rose-500/40',
+    ring: 'ring-rose-100 dark:ring-rose-500/20',
   },
   interrupted: {
     bg: 'bg-surface-50 dark:bg-surface-50',
-    text: 'text-danger-600 dark:text-danger-500',
-    dot: 'bg-danger-50 text-danger-600 dark:bg-danger-500/20 dark:text-danger-400 dark:ring-1 dark:ring-danger-500/30',
-    ring: 'ring-danger-100 dark:ring-danger-500/20',
+    text: 'text-orange-800 dark:text-orange-300',
+    dot: 'bg-orange-50 text-orange-800 ring-1 ring-orange-600/20 dark:bg-orange-500/20 dark:text-orange-300 dark:ring-1 dark:ring-orange-500/40',
+    ring: 'ring-orange-100 dark:ring-orange-500/20',
   },
 };
 
@@ -258,7 +258,7 @@ export default function TestCaseCard({ testCase, showSteps, runId }: TestCaseCar
           {/* Right side */}
           <div className="flex items-center gap-2 shrink-0">
             <span
-              className={`hidden sm:inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${config.text} ${effectiveStatus === 'passed' ? 'bg-success-50 dark:bg-success-500/10' : effectiveStatus === 'flaky' ? 'bg-warning-50 dark:bg-warning-500/10' : effectiveStatus === 'failed' || effectiveStatus === 'interrupted' ? 'bg-danger-50 dark:bg-danger-500/10' : effectiveStatus === 'timedOut' ? 'bg-warning-50 dark:bg-warning-500/10' : 'bg-slate-200/80 text-slate-800 ring-1 ring-slate-300 dark:bg-slate-700/60 dark:text-slate-200 dark:ring-slate-600'}`}
+              className={`hidden sm:inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${config.dot}`}
             >
               {effectiveStatus === 'timedOut'
                 ? 'Timed Out'

@@ -650,7 +650,7 @@ export default function App() {
 
   const handleOpenWebsite = useCallback(() => {
     if (typeof window !== 'undefined') {
-      window.open('https://docs.zenreports.dev', '_blank', 'noopener,noreferrer');
+      window.open('https://zenreports.dev', '_blank', 'noopener,noreferrer');
     }
   }, []);
 

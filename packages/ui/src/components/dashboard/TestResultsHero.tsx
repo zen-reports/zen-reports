@@ -15,8 +15,6 @@ interface ResultBreakdownItem {
   value: number;
   pct: number;
   barColor: string;
-  text: string;
-  bg: string;
   icon: ReactNode;
 }
 
@@ -38,8 +36,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.passed,
       pct: statusPercents.passed,
       barColor: 'var(--color-status-chart-passed)',
-      text: 'text-success-600 dark:text-success-500',
-      bg: 'bg-success-500/5 dark:bg-success-500/10 border-success-500/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -58,8 +54,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.flaky ?? 0,
       pct: statusPercents.flaky,
       barColor: 'var(--color-status-chart-flaky)',
-      text: 'text-warning-600 dark:text-warning-500',
-      bg: 'bg-warning-500/5 dark:bg-warning-500/10 border-warning-500/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -81,8 +75,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.failed,
       pct: statusPercents.failed,
       barColor: 'var(--color-status-chart-failed)',
-      text: 'text-danger-600 dark:text-danger-500',
-      bg: 'bg-danger-500/5 dark:bg-danger-500/10 border-danger-500/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -100,8 +92,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.timedOut,
       pct: statusPercents.timedOut,
       barColor: 'var(--color-status-chart-timed-out)',
-      text: 'text-rose-900 dark:text-rose-300',
-      bg: 'bg-rose-500/5 dark:bg-rose-500/10 border-rose-900/20 dark:border-rose-300/25',
       icon: (
         <svg
           className="h-4 w-4"
@@ -123,8 +113,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.interrupted ?? 0,
       pct: statusPercents.interrupted,
       barColor: 'var(--color-status-chart-interrupted)',
-      text: 'text-orange-600 dark:text-orange-500',
-      bg: 'bg-orange-500/5 dark:bg-orange-500/10 border-orange-500/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -146,8 +134,6 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
       value: summary.skipped,
       pct: statusPercents.skipped,
       barColor: 'var(--color-status-chart-skipped)',
-      text: 'text-slate-600 dark:text-slate-400',
-      bg: 'bg-slate-500/5 dark:bg-slate-400/10 border-slate-500/20 dark:border-slate-400/20',
       icon: (
         <svg
           className="h-4 w-4"
@@ -210,7 +196,7 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
 
               <div className="flex items-center gap-1.5">
                 <span className="text-text-body-mid dark:text-text-muted font-semibold">
-                  Suites:
+                  Files:
                 </span>
                 <span className="text-sm font-extrabold text-text-ink dark:text-text-on-primary">
                   {suites.length}
@@ -305,7 +291,10 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
               {items.map((item) => (
                 <div
                   key={item.label}
-                  className={`flex flex-col justify-between rounded-md border p-2 sm:p-2.5 shadow-2xs transition-all ${item.bg}`}
+                  className="flex flex-col justify-between rounded-md border p-2 sm:p-2.5 shadow-2xs bg-surface-50/50 dark:bg-surface-100/40"
+                  style={{
+                    borderColor: `color-mix(in srgb, ${item.barColor} 30%, transparent)`,
+                  }}
                 >
                   <div className="flex items-start justify-between gap-1 text-xs font-semibold uppercase tracking-wider text-text-body-mid dark:text-text-muted">
                     <div className="flex flex-col min-w-0">
@@ -320,10 +309,15 @@ export default function TestResultsHero({ summary, suites }: TestResultsHeroProp
                         </span>
                       )}
                     </div>
-                    <span className={`shrink-0 mt-0.5 ${item.text}`}>{item.icon}</span>
+                    <span className="shrink-0 mt-0.5" style={{ color: item.barColor }}>
+                      {item.icon}
+                    </span>
                   </div>
                   <div className="mt-2 flex items-baseline justify-between gap-1">
-                    <span className={`text-xl sm:text-2xl font-bold truncate ${item.text}`}>
+                    <span
+                      className="text-xl sm:text-2xl font-bold truncate"
+                      style={{ color: item.barColor }}
+                    >
                       {item.value}
                     </span>
                     <span className="text-xs font-medium text-text-body-mid dark:text-text-muted shrink-0">

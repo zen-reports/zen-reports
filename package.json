@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "repository": "github:zen-reports/zen-reports",
-  "homepage": "https://docs.zenreports.dev",
+  "homepage": "https://zenreports.dev",
   "keywords": [
     "playwright",
     "testing",

@@ -159,7 +159,7 @@ export default function FailuresSection({
     <div className="w-full space-y-6">
       <h1 className="sr-only">Failures</h1>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           label="Failed"
           value={failedCount}
@@ -175,6 +175,7 @@ export default function FailuresSection({
           label="Interrupted"
           value={interruptedCount}
           description="Test cases interrupted by worker crashes or process termination"
+          isLast={true}
         />
       </div>
 

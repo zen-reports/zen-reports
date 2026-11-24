@@ -337,17 +337,17 @@ export default function SuiteView({
             </span>
           )}
           {interrupted > 0 && (
-            <span className="inline-flex items-center rounded-full bg-danger-50 dark:bg-danger-500/20 ring-1 ring-danger-500/20 px-2.5 py-1 text-xs font-semibold text-danger-600 dark:text-danger-500">
+            <span className="inline-flex items-center rounded-full bg-orange-50 text-orange-800 ring-1 ring-orange-600/20 dark:bg-orange-500/20 dark:text-orange-300 dark:ring-1 dark:ring-orange-500/40 px-2.5 py-1 text-xs font-semibold">
               {interrupted} interrupted
             </span>
           )}
           {timedOut > 0 && (
-            <span className="inline-flex items-center rounded-full bg-warning-50 dark:bg-warning-500/20 ring-1 ring-warning-500/20 px-2.5 py-1 text-xs font-semibold text-warning-600 dark:text-warning-500">
+            <span className="inline-flex items-center rounded-full bg-rose-50 text-rose-800 ring-1 ring-rose-900/20 dark:bg-rose-500/20 dark:text-rose-300 dark:ring-1 dark:ring-rose-500/40 px-2.5 py-1 text-xs font-semibold">
               {timedOut} timed out
             </span>
           )}
           {failed > 0 && (
-            <span className="inline-flex items-center rounded-full bg-danger-50 dark:bg-danger-500/20 ring-1 ring-danger-500/20 px-3 py-1 text-xs font-semibold text-danger-600 dark:text-danger-500">
+            <span className="inline-flex items-center rounded-full bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40 px-3 py-1 text-xs font-semibold">
               {failed} failed
             </span>
           )}

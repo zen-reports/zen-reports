@@ -73,7 +73,7 @@ export const STATUS_BADGE_STYLE_MAP: Record<StatusType, string> = {
   flaky:
     'bg-warning-50 text-warning-600 dark:bg-warning-500/20 dark:text-warning-400 dark:ring-1 dark:ring-warning-500/30',
   failed:
-    'bg-danger-50 text-danger-600 dark:bg-danger-500/20 dark:text-danger-400 dark:ring-1 dark:ring-danger-500/30',
+    'bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40',
   timedOut:
     'bg-rose-50 text-rose-800 ring-1 ring-rose-900/20 dark:bg-rose-500/20 dark:text-rose-300 dark:ring-1 dark:ring-rose-500/40',
   interrupted:

@@ -9,7 +9,7 @@ test.fail(
     console.log('This test should fail');
 
     // Go to Zen Reporter's home page
-    await page.goto('https://docs.zenreports.dev');
+    await page.goto('https://zen-reporter.vercel.app');
 
     // Wait for "Getting Started" link-button to be visible
     await page
@@ -50,11 +50,14 @@ test.fail(
   {
     tag: ['@timeout'],
   },
-  async ({ page, browserName }) => {
-    test.skip(browserName === 'chromium', 'skipping test intentionally in chromium');
+  async ({ page, browserName, channel }) => {
+    test.skip(
+      browserName === 'chromium' && !channel,
+      'skipping test intentionally in generic chromium only'
+    );
 
     // Go to Zen Reporter's home page
-    await page.goto('https://docs.zenreports.dev');
+    await page.goto('https://zen-reporter.vercel.app');
 
     // Wait for "Getting Started" link-button to be visible
     await page

@@ -17,9 +17,9 @@ export const statusConfig = {
     dot: 'bg-success-500',
   },
   failed: {
-    bg: 'bg-danger-100 text-danger-700 ring-1 ring-danger-200 dark:bg-danger-500/20 dark:text-danger-400 dark:ring-1 dark:ring-danger-500/30',
-    text: 'text-danger-600 dark:text-danger-400',
-    dot: 'bg-danger-500',
+    bg: 'bg-red-50 text-red-700 ring-1 ring-red-600/20 dark:bg-red-500/20 dark:text-red-400 dark:ring-1 dark:ring-red-500/40',
+    text: 'text-red-700 dark:text-red-400',
+    dot: 'bg-red-500',
   },
   skipped: {
     bg: 'bg-slate-200/80 text-slate-800 ring-1 ring-slate-300 dark:bg-slate-700/60 dark:text-slate-200 dark:ring-1 dark:ring-slate-600',
@@ -27,14 +27,14 @@ export const statusConfig = {
     dot: 'bg-surface-300',
   },
   timedOut: {
-    bg: 'bg-warning-100 text-warning-700 ring-1 ring-warning-200 dark:bg-warning-500/20 dark:text-warning-400 dark:ring-1 dark:ring-warning-500/30',
-    text: 'text-warning-600 dark:text-warning-400',
-    dot: 'bg-warning-500',
+    bg: 'bg-rose-50 text-rose-800 ring-1 ring-rose-900/20 dark:bg-rose-500/20 dark:text-rose-300 dark:ring-1 dark:ring-rose-500/40',
+    text: 'text-rose-800 dark:text-rose-300',
+    dot: 'bg-rose-400',
   },
   interrupted: {
-    bg: 'bg-danger-100 text-danger-700 ring-1 ring-danger-200 dark:bg-danger-500/20 dark:text-danger-400 dark:ring-1 dark:ring-danger-500/30',
-    text: 'text-danger-600 dark:text-danger-400',
-    dot: 'bg-danger-500',
+    bg: 'bg-orange-50 text-orange-800 ring-1 ring-orange-600/20 dark:bg-orange-500/20 dark:text-orange-300 dark:ring-1 dark:ring-orange-500/40',
+    text: 'text-orange-800 dark:text-orange-300',
+    dot: 'bg-orange-500',
   },
 };
 

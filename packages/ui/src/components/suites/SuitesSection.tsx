@@ -60,6 +60,21 @@ function getAllProjects(suites: TestSuite[]): string[] {
   return Array.from(projectSet).sort();
 }
 
+/**
+ * Calculates the total number of top-level suites across all spec files.
+ * If a spec file contains root-level describe suites, those are counted as individual suites.
+ * If a spec file has no root describe suites (or only standalone tests), the file itself counts as 1 suite.
+ *
+ * @param suites - Top-level test suites (spec files).
+ * @returns Total count of top-level test suites.
+ */
+function countTopLevelSuites(suites: TestSuite[]): number {
+  return suites.reduce((acc, fileSuite) => {
+    const rootDescribesCount = fileSuite.subSuites?.length ?? 0;
+    return acc + (rootDescribesCount > 0 ? rootDescribesCount : 1);
+  }, 0);
+}
+
 function countTotalCases(suites: TestSuite[]): number {
   let count = 0;
 
@@ -189,6 +204,7 @@ export default function SuitesSection({ suites }: SuitesSectionProps) {
 
   const availableStatuses = useMemo(() => getAllStatuses(suites), [suites]);
   const availableProjects = useMemo(() => getAllProjects(suites), [suites]);
+  const totalSuitesCount = useMemo(() => countTopLevelSuites(suites), [suites]);
   const totalTestCases = useMemo(() => countTotalCases(suites), [suites]);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const availableTagsWithCounts = useMemo(() => getAllTagsWithCounts(suites), [suites]);
@@ -274,17 +290,23 @@ export default function SuitesSection({ suites }: SuitesSectionProps) {
       <h1 className="sr-only">Test Suites</h1>
 
       {/* Quick Stat Cards */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard
+          label="Files"
+          value={suites.length}
+          description="Total test spec files executed"
+          isFirst={true}
+        />
         <StatCard
           label="Suites"
-          value={suites.length}
+          value={totalSuitesCount}
           description="Total count of top-level test suites"
-          isFirst={true}
         />
         <StatCard
           label="Total Tests"
           value={totalTestCases}
           description="Total test cases executed across all suites"
+          isLast={true}
         />
       </div>
 

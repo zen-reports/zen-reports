@@ -134,8 +134,8 @@ html.dark {
   color-scheme: dark;
   --color-status-chart-passed: var(--color-success-500);
   --color-status-chart-flaky: var(--color-warning-500);
-  --color-status-chart-failed: var(--color-danger-500);
-  --color-status-chart-timed-out: #fda4af; /* Distinct soft berry/rose-300 */
+  --color-status-chart-failed: #ef4444; /* Distinct vibrant red (red-500) for hard failure contrast */
+  --color-status-chart-timed-out: #fda4af; /* Distinct soft pastel rose/pink (rose-300) */
   --color-status-chart-interrupted: #f97316; /* Distinct orange-500 */
   --color-status-chart-skipped: #64748b; /* slate-500 */
 
@@ -422,6 +422,9 @@ html[data-theme='lotus'].dark,
   --color-accent-orange: #ff6b00;
   --color-accent-yellow: #c2ef4e;
   --color-accent-red: #fa7faa;
+
+  /* ── Status Chart Palette (Lotus Dark) ────────── */
+  --color-status-chart-failed: #e11d48; /* Distinct rich crimson/rose-600 */
 
   /* ── Step Category Composition Palette (Lotus Dark) ─ */
   --color-step-cat-assertions: #c2ef4e;
@@ -785,7 +788,7 @@ input[type='range'].onion-opacity-slider::-webkit-slider-thumb {
 }
 .dark .text-emerald-300,
 .dark .text-emerald-400 {
-  color: #34d399;
+  color: #6ee7b7;
 }
 .text-amber-600,
 .text-amber-700 {

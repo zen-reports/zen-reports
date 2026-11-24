@@ -103,7 +103,7 @@ export default function FileMetricsSection({ suites, isMinimalReport }: FileMetr
       description: 'Count of spec files containing 1+ failed or timed-out test cases',
       badgeClass:
         failingFilesCount > 0
-          ? 'bg-danger-500/10 text-danger-600 dark:bg-danger-500/20 dark:text-danger-300 font-semibold'
+          ? 'bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 font-semibold'
           : 'bg-success-500/10 text-success-600 dark:bg-success-500/20 dark:text-success-400',
     },
     {
@@ -129,7 +129,7 @@ export default function FileMetricsSection({ suites, isMinimalReport }: FileMetr
       title: failureHotspot?.file.fileName,
       description: 'Highest percentage of overall suite failures originating from a single file',
       badgeClass: failureHotspot
-        ? 'bg-danger-500/10 text-danger-600 dark:bg-danger-500/20 dark:text-danger-300 font-semibold'
+        ? 'bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 font-semibold'
         : 'bg-success-500/10 text-success-600 dark:bg-success-500/20 dark:text-success-400',
     },
   ];

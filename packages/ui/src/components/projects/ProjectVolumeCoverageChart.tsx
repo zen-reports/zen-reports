@@ -74,8 +74,8 @@ const renderTooltip = (props: TooltipContentProps) => {
           <span className="font-bold tabular-nums">{data.Skipped}</span>
         </div>
         <div className="flex justify-between gap-4 pt-1 border-t border-border-default font-semibold">
-          <span className="text-emerald-600 dark:text-emerald-400">Coverage Density:</span>
-          <span className="font-bold tabular-nums text-emerald-600 dark:text-emerald-400">
+          <span className="text-warning-600 dark:text-warning-500">Coverage Density:</span>
+          <span className="font-bold tabular-nums text-warning-600 dark:text-warning-500">
             {data['Coverage Density (%)']}%
           </span>
         </div>

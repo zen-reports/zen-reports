@@ -123,7 +123,7 @@ export default function RegressionsTableSection({
           </span>
         ),
         headerLabel: 'Regressed In',
-        className: 'text-danger-600 dark:text-danger-500 font-bold',
+        className: 'text-red-700 dark:text-red-400 font-bold',
         cell: (row) => formatDateLocal(row.regressed_at),
         csvValue: (row) => formatDateLocal(row.regressed_at),
       },

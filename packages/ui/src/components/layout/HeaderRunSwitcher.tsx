@@ -215,7 +215,7 @@ export function HeaderRunSwitcher({
         <div
           role="menu"
           aria-label="Test run quick switcher"
-          className="absolute left-0 top-full mt-1.5 z-50 w-80 sm:w-[28rem] rounded-lg border border-border-default bg-surface-50 dark:bg-surface-100 shadow-xl py-1.5 divide-y divide-border-default/60 text-xs animate-in fade-in zoom-in-95 duration-100"
+          className="absolute left-0 top-full mt-1.5 z-50 w-80 sm:w-md rounded-lg border border-border-default bg-surface-50 dark:bg-surface-100 shadow-xl py-1.5 divide-y divide-border-default/60 text-xs animate-in fade-in zoom-in-95 duration-100"
         >
           {/* Recent Runs list */}
           <div className="p-1.5">
@@ -286,7 +286,7 @@ export function HeaderRunSwitcher({
                         <div className="mt-1 flex items-center gap-2.5 text-[11px]">
                           {run.git_branch ? (
                             <div
-                              className="inline-flex items-center gap-1 max-w-[15rem] truncate text-text-ink dark:text-text-on-primary font-medium"
+                              className="inline-flex items-center gap-1 max-w-60 truncate text-text-ink dark:text-text-on-primary font-medium"
                               title={`Branch: ${run.git_branch}`}
                             >
                               <svg
