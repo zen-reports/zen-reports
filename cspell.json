@@ -72,6 +72,8 @@
     "waitforselector",
     "waitfortimeout",
     "WCAG",
-    "webp"
+    "webp",
+    "previewable",
+    "zoomable"
   ]
 }
