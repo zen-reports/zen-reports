@@ -1,12 +1,16 @@
+import { fileURLToPath } from 'node:url';
 import cSpellConfigs from '@cspell/eslint-plugin/configs';
 import eslintReact from '@eslint-react/eslint-plugin';
 import js from '@eslint/js';
 import json from '@eslint/json';
 import markdown from '@eslint/markdown';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import tailwind from 'eslint-plugin-tailwindcss';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
+const cssConfigPath = fileURLToPath(new URL('./packages/ui/src/app.css', import.meta.url));
 
 export default defineConfig([
   {
@@ -38,6 +42,15 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+  {
+    files: ['packages/ui/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    extends: [tailwind.configs['flat/recommended'] || tailwind.configs.recommended],
+    settings: {
+      tailwindcss: {
+        cssConfigPath,
+      },
     },
   },
   {
