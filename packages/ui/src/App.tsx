@@ -119,7 +119,7 @@ export default function App() {
       }
     }
 
-    return 'sage';
+    return 'bamboo';
   });
 
   const [darkMode, setDarkMode] = useState<'system' | 'light' | 'dark'>(() => {
@@ -827,7 +827,7 @@ export default function App() {
   }, []);
 
   const handleCycleTheme = useCallback(() => {
-    const themes: ThemeMode[] = ['sage', 'lotus', 'oasis'];
+    const themes: ThemeMode[] = ['bamboo', 'lotus', 'oasis'];
     setTheme((prev) => {
       const currentIndex = themes.indexOf(prev);
       const nextTheme = themes[(currentIndex + 1) % themes.length];

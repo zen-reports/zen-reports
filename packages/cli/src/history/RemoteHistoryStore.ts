@@ -611,7 +611,7 @@ export class RemoteHistoryStore implements HistoryStore {
           osName: run.osName ?? undefined,
         },
         suites: buildSuitesFromCases(testCases),
-        theme: 'Sage',
+        theme: 'Bamboo',
       },
     };
   }

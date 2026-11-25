@@ -122,7 +122,7 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
           break;
         }
 
-        // Theme palette cycle (Sage -> Lotus -> Oasis)
+        // Theme palette cycle (Bamboo -> Lotus -> Oasis)
         case 't':
         case 'T': {
           event.preventDefault();

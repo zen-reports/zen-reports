@@ -6,7 +6,7 @@ test.describe('Zen Reporter Configuration Tests', () => {
     const config = resolveConfig();
     expect(config.outputDir).toBe('zen-report');
     expect(config.projectName).toBe('Test Automation Project');
-    expect(config.theme).toBe('Sage');
+    expect(config.theme).toBe('Bamboo');
     expect(config.darkMode).toBe('system');
   });
 
@@ -19,7 +19,7 @@ test.describe('Zen Reporter Configuration Tests', () => {
     expect(config.outputDir).toBe('custom-output');
     expect(config.projectName).toBe('My E2E Project');
     expect(config.testRunName).toBe('Nightly Run #42');
-    expect(config.theme).toBe('Sage');
+    expect(config.theme).toBe('Bamboo');
     expect(config.darkMode).toBe('system');
   });
 
@@ -45,13 +45,13 @@ test.describe('Zen Reporter Configuration Tests', () => {
     });
     expect(lightConfig.darkMode).toBe('light');
 
-    // Legacy or invalid theme names fall back to default Sage theme and record configWarnings
+    // Legacy or invalid theme names fall back to default Bamboo theme and record configWarnings
     const legacyConfig = resolveConfig({
       theme: 'Streak',
     });
-    expect(legacyConfig.theme).toBe('Sage');
+    expect(legacyConfig.theme).toBe('Bamboo');
     expect(legacyConfig.configWarnings).toEqual([
-      'Unknown theme "Streak". Falling back to default "Sage" theme.',
+      'Unknown theme "Streak". Falling back to default "Bamboo" theme.',
     ]);
   });
 
@@ -159,7 +159,7 @@ test.describe('Zen Reporter Configuration Tests', () => {
 
   test('warns on unknown or misspelled configuration keys with suggestions', () => {
     const config = resolveConfig({
-      thme: 'Sage',
+      thme: 'Bamboo',
       outDir: 'custom',
       unknownProp: 123,
     });

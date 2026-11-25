@@ -44,7 +44,7 @@ Dark mode:
   - **Notification Center**: Built-in notification center accessible from the sidebar footer alerting you to configuration fallbacks, environment warnings, and system notices across active and historical runs.
   - **Interactive Configuration Generator**: Built-in visual Playwright configuration generator accessible right from the sidebar footer. Easily adjust reporter options, explore history modes (Local SQLite vs Remote SaaS), preview syntax-highlighted TypeScript/JavaScript configuration diffs in real-time with modified property indicators, and copy directly to `playwright.config.ts` or `playwright.config.js`.
   - **Keyboard Navigation & Hotkeys**: Full single-key shortcuts for rapid dashboard navigation (`1-8` for tabs, `[`/`]` for cycling, `/` for run switcher, `q` for the quick run switcher menu, `o` for notifications, `x`/`s` for expanding/collapsing suites & failures, `f` for search focus, `p`/`n` for table & attachment pagination, `d` for dark mode, `t` for themes, `r` for back-to-top, and `?` for the interactive cheat-sheet). See the complete [Keyboard Shortcuts Guide](docs/keyboard-shortcuts.md).
-  - **Themes & Dark Mode**: Multiple design themes (`Sage`, `Lotus`, `Oasis`) with light, dark, and auto system mode toggles (following OS preferences), built with WCAG-compliant color tokens and configurable default states.
+  - **Themes & Dark Mode**: Multiple design themes (`Bamboo`, `Lotus`, `Oasis`) with light, dark, and auto system mode toggles (following OS preferences), built with WCAG-compliant color tokens and configurable default states.
   - **Self-Contained Report Bundle Output**: Generates an interactive HTML dashboard (`index.html`) backed by local SQLite execution history (`history.db`) and test attachments (`attachments/`) for easy CI/CD artifact storage. Optionally creates a lightweight standalone `summary.html` dedicated to executive dashboards.
 
 > **Note**: Designed and built with AI pair-programming tools; fully tested, maintained, and quality-assured by human hands.
@@ -99,7 +99,7 @@ export default defineConfig({
       {
         outputDir: 'zen-report', // Output directory for reports and SQLite history
         projectName: 'My E2E Project', // Project name displayed in top navigation bar
-        theme: 'Sage', // Initial visual theme: 'Sage' | 'Lotus' | 'Oasis'
+        theme: 'Bamboo', // Initial visual theme: 'Bamboo' | 'Lotus' | 'Oasis'
       },
     ],
   ],

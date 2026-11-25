@@ -38,7 +38,7 @@ interface ConfigState {
   outputDir: string;
   projectName: string;
   testRunName: string;
-  theme: 'Sage' | 'Lotus' | 'Oasis';
+  theme: 'Bamboo' | 'Lotus' | 'Oasis';
   darkMode: 'system' | 'true' | 'false';
   singleSummaryFile: boolean;
   minimalReport: boolean;
@@ -213,7 +213,7 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
       outputDir: resolvedOutputDir,
       projectName: activeConfig?.projectName || 'Test Automation Project',
       testRunName: activeConfig?.testRunName || 'Nightly Build #{N}',
-      theme: (activeConfig?.theme as 'Sage' | 'Lotus' | 'Oasis') || 'Sage',
+      theme: (activeConfig?.theme as 'Bamboo' | 'Lotus' | 'Oasis') || 'Bamboo',
       darkMode: darkVal,
       singleSummaryFile: activeConfig?.singleSummaryFile ?? true,
       minimalReport: activeConfig?.minimalReport ?? false,
@@ -238,7 +238,7 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
   const [outputDir, setOutputDir] = useState(initialConfig.outputDir);
   const [projectName, setProjectName] = useState(initialConfig.projectName);
   const [testRunName, setTestRunName] = useState(initialConfig.testRunName);
-  const [theme, setTheme] = useState<'Sage' | 'Lotus' | 'Oasis'>(initialConfig.theme);
+  const [theme, setTheme] = useState<'Bamboo' | 'Lotus' | 'Oasis'>(initialConfig.theme);
   const [darkMode, setDarkMode] = useState<'system' | 'true' | 'false'>(initialConfig.darkMode);
   const [singleSummaryFile, setSingleSummaryFile] = useState(initialConfig.singleSummaryFile);
   const [minimalReport, setMinimalReport] = useState(initialConfig.minimalReport);
@@ -428,7 +428,7 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
         });
       }
 
-      if (theme && theme !== 'Sage') {
+      if (theme && theme !== 'Bamboo') {
         jsonEntries.push({ key: 'theme', value: theme, isChanged: isThemeChanged });
       }
 
@@ -562,8 +562,8 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
       });
     }
 
-    // Theme (Sage is default, explicit only when non-default or changed)
-    if (theme && theme !== 'Sage') {
+    // Theme (Bamboo is default, explicit only when non-default or changed)
+    if (theme && theme !== 'Bamboo') {
       lines.push({
         text: `        theme: '${theme}',`,
         isChanged: isThemeChanged,
@@ -904,21 +904,21 @@ export function ConfigGeneratorModal({ isOpen, onClose, activeConfig }: ConfigGe
               <div>
                 <label className="font-medium text-text-ink dark:text-text-on-primary flex items-center gap-1.5 mb-1">
                   <span>Theme</span>
-                  {!activeConfig?.isCustomTheme && !isThemeChanged && theme === 'Sage' && (
+                  {!activeConfig?.isCustomTheme && !isThemeChanged && theme === 'Bamboo' && (
                     <span className="text-[10px] text-text-muted font-normal">(Using default)</span>
                   )}
                   {isThemeChanged && <ModifiedDot />}
                 </label>
                 <select
                   value={theme}
-                  onChange={(e) => setTheme(e.target.value as 'Sage' | 'Lotus' | 'Oasis')}
+                  onChange={(e) => setTheme(e.target.value as 'Bamboo' | 'Lotus' | 'Oasis')}
                   className={`w-full rounded-md border bg-canvas px-2.5 py-1 text-xs text-text-ink dark:text-text-on-primary focus:border-accent-blue focus:outline-hidden cursor-pointer transition-colors ${
                     isThemeChanged
                       ? 'border-accent-blue ring-1 ring-accent-blue/30'
                       : 'border-border-default'
                   }`}
                 >
-                  <option value="Sage">Sage (Green / Classic)</option>
+                  <option value="Bamboo">Bamboo (Green / Classic)</option>
                   <option value="Lotus">Lotus (Indigo / Lime)</option>
                   <option value="Oasis">Oasis (Electric Blue / Navy)</option>
                 </select>

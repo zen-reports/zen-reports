@@ -2,14 +2,14 @@
 @source '../../core/src';
 
 /* ==========================================================================
-   DEFAULT THEME: SAGE
+   DEFAULT THEME: BAMBOO
    ========================================================================== */
 @theme {
   /* ── Brand Primary ───────────────────────────── */
   --color-ink: #006241;
   --color-ink-strong: #1e3932;
 
-  /* ── Surface Palette (Sage Warm Canvas) ──── */
+  /* ── Surface Palette (Bamboo Warm Canvas) ──── */
   --color-canvas: #f2f0eb;
   --color-surface-50: #e8e5df;
   --color-surface-100: #dad6ce;
@@ -34,7 +34,7 @@
   --color-border-chart: #b4bcc1;
   --color-border-active: #1e3932;
 
-  /* ── Semantic: Success (Sage Green) ─────── */
+  /* ── Semantic: Success (Bamboo Green) ─────── */
   --color-success: #00754a;
   --color-success-50: #d4e9e2;
   --color-success-100: #c2e3d8;
@@ -73,7 +73,7 @@
   --color-info-700: #1e40af;
 
   /* ── Accent Palette ──────────────────────────── */
-  --color-accent-sage: #006241;
+  --color-accent-bamboo: #006241;
   --color-accent-green: #00754a;
   --color-accent-house: #1e3932;
   --color-accent-gold: #cba258;
@@ -98,7 +98,7 @@
   --color-status-chart-interrupted: #ea580c; /* Distinct orange-600 */
   --color-status-chart-skipped: #94a3b8; /* slate-400 */
 
-  /* ── Step Category Composition Palette (Sage / Default Light) ─ */
+  /* ── Step Category Composition Palette (Bamboo / Default Light) ─ */
   --color-step-cat-assertions: var(--color-success-500);
   --color-step-cat-assertions-border: var(--color-success-600);
   --color-step-cat-hooks: var(--color-success-200);
@@ -114,7 +114,7 @@
 
   /* ── Project Identity Palette (Duration trend chart series) ─
      Declared explicitly on :root so `var()` references from chart
-     code resolve in the default (Sage) scope. Tailwind v4 only emits
+     code resolve in the default (Bamboo) scope. Tailwind v4 only emits
      used @theme variables, so tokens referenced solely from JS chart
      code are guaranteed here. Scoped theme blocks (html.dark,
      [data-theme=…]) override these values per theme. */
@@ -139,7 +139,7 @@ html.dark {
   --color-status-chart-interrupted: #f97316; /* Distinct orange-500 */
   --color-status-chart-skipped: #64748b; /* slate-500 */
 
-  /* ── Step Category Composition Palette (Sage Dark) ─ */
+  /* ── Step Category Composition Palette (Bamboo Dark) ─ */
   --color-step-cat-assertions: #4ade80;
   --color-step-cat-assertions-border: #22c55e;
   --color-step-cat-hooks: #86efac;
@@ -157,9 +157,9 @@ html.dark {
 /* ── Dark mode variant definition ─ */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Sage Dark Mode */
+/* Bamboo Dark Mode */
 html.dark,
-html[data-theme='sage'].dark {
+html[data-theme='bamboo'].dark {
   --color-ink: #ffffff;
   --color-ink-strong: #ffffff;
 
@@ -217,7 +217,7 @@ html[data-theme='sage'].dark {
   --color-info-600: #0284c7;
   --color-info-700: #0369a1;
 
-  --color-accent-sage: #4ade80;
+  --color-accent-bamboo: #4ade80;
   --color-accent-green: #22c55e;
   --color-accent-house: var(--color-warning-500);
   --color-accent-gold: #fcd34d;
@@ -310,7 +310,7 @@ html[data-theme='lotus'],
   --color-info-700: #422082;
 
   /* ── Accent Palette ──────────────────────────── */
-  --color-accent-sage: #150f23;
+  --color-accent-bamboo: #150f23;
   --color-accent-green: #709600;
   --color-accent-house: #1f1633;
   --color-accent-gold: #eab308;
@@ -411,7 +411,7 @@ html[data-theme='lotus'].dark,
   --color-info-700: #8174e5;
 
   /* ── Accent Palette ──────────────────────────── */
-  --color-accent-sage: #c2ef4e;
+  --color-accent-bamboo: #c2ef4e;
   --color-accent-green: #c2ef4e;
   --color-accent-house: #79628c;
   --color-accent-gold: #facc15;
@@ -521,7 +521,7 @@ html[data-theme='oasis'],
   --color-info-700: #2e2b8c;
 
   /* ── Accent Palette ──────────────────────────── */
-  --color-accent-sage: #533afd;
+  --color-accent-bamboo: #533afd;
   --color-accent-green: #00875a;
   --color-accent-house: #1c1e54;
   --color-accent-gold: #b87a28;
@@ -622,7 +622,7 @@ html[data-theme='oasis'].dark,
   --color-info-700: #533afd;
 
   /* ── Accent Palette ──────────────────────────── */
-  --color-accent-sage: #665efd;
+  --color-accent-bamboo: #665efd;
   --color-accent-green: #36b37e;
   --color-accent-house: #b9b9f9;
   --color-accent-gold: #f5a623;

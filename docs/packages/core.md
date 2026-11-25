@@ -43,7 +43,7 @@ packages/core/
 | `types/history.ts`          | Historical run/test row schemas shared by the SQLite store, remote store, and server                                                              |
 | `types/notifications.ts`    | Notification models (`AppNotification`, category, scope, preferences) & report extractor (`extractNotificationsFromReport`)                       |
 | `statsUtils.ts`             | Single-pass O(N) project statistics, latency percentiles (`p50`, `p75`, `p95`), and executive KPI computation (used by UI and summary generation) |
-| `theme.ts`                  | Theme tokens (Sage, Lotus, Oasis), project identity color palette & status color palettes consumed by the UI                                      |
+| `theme.ts`                  | Theme tokens (Bamboo, Lotus, Oasis), project identity color palette & status color palettes consumed by the UI                                    |
 | `exportToCsv.ts`            | RFC 4180 CSV export with UTF-8 BOM (used by UI exports and `zr summary`)                                                                          |
 | `codeHighlighting.ts`       | Syntax highlighting for step snippets and error stack traces rendered in the UI                                                                   |
 | `cryptoUtils.ts`            | Hashing (MD5/SHA-256) and error signature clustering for flaky/regression detection                                                               |

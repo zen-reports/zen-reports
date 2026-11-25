@@ -314,14 +314,16 @@ export function resolveConfig(
     }
   }
 
-  let theme = 'Sage';
+  let theme = 'Bamboo';
   if (rawConfig?.theme != null) {
     const rawThemeStr = String(rawConfig.theme);
     const normalized = normalizeTheme(rawThemeStr);
     if (normalized) {
       theme = normalized;
     } else {
-      configWarnings.push(`Unknown theme "${rawThemeStr}". Falling back to default "Sage" theme.`);
+      configWarnings.push(
+        `Unknown theme "${rawThemeStr}". Falling back to default "Bamboo" theme.`
+      );
     }
   }
 
@@ -533,7 +535,7 @@ export function resolveConfig(
     rawTestRunName,
     singleSummaryFile,
     theme,
-    isCustomTheme: rawConfig?.theme != null && theme !== 'Sage',
+    isCustomTheme: rawConfig?.theme != null && theme !== 'Bamboo',
     darkMode,
     isCustomDarkMode: rawConfig?.darkMode != null && darkMode !== 'system',
     enableHistory,

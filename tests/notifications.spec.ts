@@ -35,7 +35,7 @@ test.describe('Notification Center Unit Tests', () => {
         suites: [],
         projectName: 'Notice Project',
         configWarnings: [
-          'Unknown theme "Streak". Falling back to default "Sage" theme.',
+          'Unknown theme "Streak". Falling back to default "Bamboo" theme.',
           'Invalid outputDir "   ". Falling back to default "zen-report".',
         ],
       },
@@ -45,11 +45,11 @@ test.describe('Notification Center Unit Tests', () => {
     expect(notifications).toHaveLength(2);
 
     expect(notifications[0]).toEqual({
-      id: 'run-42:config-warning:0:Unknown theme "Streak". Falling back to default "Sage" theme.',
+      id: 'run-42:config-warning:0:Unknown theme "Streak". Falling back to default "Bamboo" theme.',
       category: 'warning',
       scope: 'run',
       title: 'Configuration Notice',
-      message: 'Unknown theme "Streak". Falling back to default "Sage" theme.',
+      message: 'Unknown theme "Streak". Falling back to default "Bamboo" theme.',
       timestamp: new Date('2026-11-17T01:00:00.000Z').getTime(),
       runId: 'run-42',
       runName: 'run-42',

@@ -21,7 +21,7 @@ const SHORTCUT_SECTIONS: ShortcutSection[] = [
     title: 'Appearance & Themes',
     shortcuts: [
       { keyDesc: ['D'], description: 'Cycle dark mode (System → Light → Dark)' },
-      { keyDesc: ['T'], description: 'Cycle color theme (Sage → Lotus → Oasis)' },
+      { keyDesc: ['T'], description: 'Cycle color theme (Bamboo → Lotus → Oasis)' },
     ],
   },
   {

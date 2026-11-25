@@ -38,8 +38,8 @@ export function ThemeControls({
 
   const themes = [
     {
-      id: 'sage' as const,
-      label: 'Sage',
+      id: 'bamboo' as const,
+      label: 'Bamboo',
       colorDot: 'bg-[#006241] dark:bg-[#4ade80] ring-1 ring-black/10 dark:ring-white/20',
     },
     {

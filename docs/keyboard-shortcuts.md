@@ -100,10 +100,10 @@ When inspecting active warnings, configuration notices, or system alerts in the 
 
 ## Appearance & Themes
 
-| Shortcut     | Action            | Description                                                                                                                                |
-| :----------- | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>D</kbd> | Cycle Dark Mode   | Cycle dark mode states: **System Mode** (follows OS preferences) → **Light Mode** → **Dark Mode**.                                         |
-| <kbd>T</kbd> | Cycle Color Theme | Cycle between WCAG-accessible dashboard color palettes: **Sage** (Emerald) → **Lotus** (Indigo / Plum) → **Oasis** (Electric Blue / Navy). |
+| Shortcut     | Action            | Description                                                                                                                                  |
+| :----------- | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>D</kbd> | Cycle Dark Mode   | Cycle dark mode states: **System Mode** (follows OS preferences) → **Light Mode** → **Dark Mode**.                                           |
+| <kbd>T</kbd> | Cycle Color Theme | Cycle between WCAG-accessible dashboard color palettes: **Bamboo** (Emerald) → **Lotus** (Indigo / Plum) → **Oasis** (Electric Blue / Navy). |
 
 ---
 
