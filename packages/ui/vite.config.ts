@@ -4,6 +4,7 @@ import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, type Plugin } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
+import license from 'rollup-plugin-license';
 import type { TestCase, TestSuite } from '@zen-reports/zen-core';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -170,6 +171,13 @@ export default defineConfig({
     viteSingleFile({
       useRecommendedBuildConfig: true,
       removeViteModuleLoader: true,
+    }),
+    license({
+      thirdParty: {
+        output: {
+          file: resolve(__dirname, 'dist/THIRD_PARTY_LICENSES.txt'),
+        },
+      },
     }),
   ],
   resolve: {

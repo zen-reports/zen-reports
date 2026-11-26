@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Copies the built zen-ui report template (index.html and hashed favicon
- * assets) into the reporter's dist/ folder so the published bundle stays
+ * Copies the built zen-ui report template (index.html, hashed favicon
+ * assets, and THIRD_PARTY_LICENSES.txt) into the reporter's dist/ folder so the published bundle stays
  * self-contained. Resolves the template from the @zen-reports/zen-ui workspace
  * dependency instead of a hard-coded relative path or hashed asset name.
  */
@@ -25,7 +25,7 @@ function resolveUiDistDir(specifier) {
  * Copies the UI template assets into the reporter dist directory.
  * @param {string} uiDistDir - Absolute path to packages/ui/dist.
  * @param {string} reporterDistDir - Absolute path to packages/reporter/dist.
- * @returns {void} Copies index.html and all favicon-*.svg assets.
+ * @returns {void} Copies index.html, THIRD_PARTY_LICENSES.txt (if present), and all favicon-*.svg assets.
  */
 function copyTemplate(uiDistDir, reporterDistDir) {
   fs.mkdirSync(reporterDistDir, { recursive: true });
@@ -37,6 +37,11 @@ function copyTemplate(uiDistDir, reporterDistDir) {
     );
   }
   fs.copyFileSync(indexHtml, path.join(reporterDistDir, 'index.html'));
+
+  const licensesFile = path.join(uiDistDir, 'THIRD_PARTY_LICENSES.txt');
+  if (fs.existsSync(licensesFile)) {
+    fs.copyFileSync(licensesFile, path.join(reporterDistDir, 'THIRD_PARTY_LICENSES.txt'));
+  }
 
   const favicons = fs
     .readdirSync(uiDistDir)
