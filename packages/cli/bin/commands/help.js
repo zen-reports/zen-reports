@@ -9,6 +9,8 @@ Usage:
   npx zr show                           Serve and view the HTML report
   npx zr summary                        Output Markdown summary snippet for current run results
   npx zr env                            Print environment details (versions, OS)
+  npx zr version, -v, --version         Print CLI version
+  npx zr help, -h, --help               Print this help message
   npx zr history                        List historic runs (default 25; use --all or --limit <N>)
   npx zr history runs                   Same as above
   npx zr history flaky                  Tests that failed in some runs and passed in others

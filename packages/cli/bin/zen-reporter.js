@@ -5,6 +5,7 @@ import { handleHistory } from './commands/history.js';
 import { runInteractiveMenu } from './commands/menu.js';
 import { handleShow } from './commands/show.js';
 import { handleSummary } from './commands/summary.js';
+import { printVersion } from './commands/version.js';
 
 const cwd = process.cwd();
 const args = process.argv.slice(2);
@@ -30,6 +31,8 @@ async function main() {
       await handleHistory(args.slice(1), cwd);
     } else if (command === 'help' || command === '--help' || command === '-h') {
       printHelp();
+    } else if (command === 'version' || command === '--version' || command === '-v') {
+      printVersion();
     } else {
       console.error(`✗ Unknown command: "${command}"\n`);
       printHelp();
